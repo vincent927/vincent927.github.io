@@ -1,0 +1,715 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="baidu-site-verification" content="LJgfOWhkKl" />
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="kvm," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="一.qcow2格式磁盘文件Qcow2镜像格式是qemu支持的磁盘镜像格式之一。qcow2的表现形式为在一个文件中模拟一个固定大小的块设备。对与qcow2格式，相对于raw格式来说，有几个优点：更小的文件大小，即使是不支持holes的文件系统也可以（这样的话，ls跟du看到的就一样了)；Copy-on-write的支持；快照的支持，可以维护多个快照；基于zlib的压缩；AES加密">
+<meta name="keywords" content="kvm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="KVM安装虚拟机">
+<meta property="og:url" content="http://vincentblog.cn/KVM安装虚拟机.html">
+<meta property="og:site_name" content="Vincent Blog">
+<meta property="og:description" content="一.qcow2格式磁盘文件Qcow2镜像格式是qemu支持的磁盘镜像格式之一。qcow2的表现形式为在一个文件中模拟一个固定大小的块设备。对与qcow2格式，相对于raw格式来说，有几个优点：更小的文件大小，即使是不支持holes的文件系统也可以（这样的话，ls跟du看到的就一样了)；Copy-on-write的支持；快照的支持，可以维护多个快照；基于zlib的压缩；AES加密">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ww4.sinaimg.cn/mw690/6e9a4d0bgw1f971asgxk2j20cl05yq39.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/6e9a4d0bgw1f971ckctzpj20mo0hqmy0.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/6e9a4d0bgw1f971cxjrbwj20mo0hqdgy.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/6e9a4d0bgw1f971d2ydv1j20mo0hqdhc.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/6e9a4d0bgw1f971f5d83dj20mo0hqdh3.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/6e9a4d0bgw1f971fxjw1sj20mo0hq3zk.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/6e9a4d0bgw1f971fk337aj20mo0hqgmx.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/6e9a4d0bgw1f971gahlwxj20mo0hq75h.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/6e9a4d0bgw1f971gh5pb2j20mo0hqab2.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/6e9a4d0bgw1f971h2flb0j20mo0hq75a.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/6e9a4d0bgw1f971h6ski3j20mo0hqdgo.jpg">
+<meta property="og:updated_time" content="2018-08-22T01:39:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="KVM安装虚拟机">
+<meta name="twitter:description" content="一.qcow2格式磁盘文件Qcow2镜像格式是qemu支持的磁盘镜像格式之一。qcow2的表现形式为在一个文件中模拟一个固定大小的块设备。对与qcow2格式，相对于raw格式来说，有几个优点：更小的文件大小，即使是不支持holes的文件系统也可以（这样的话，ls跟du看到的就一样了)；Copy-on-write的支持；快照的支持，可以维护多个快照；基于zlib的压缩；AES加密">
+<meta name="twitter:image" content="http://ww4.sinaimg.cn/mw690/6e9a4d0bgw1f971asgxk2j20cl05yq39.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 9929411,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://vincentblog.cn/KVM安装虚拟机.html"/>
+
+
+  <title> KVM安装虚拟机 | Vincent Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?e78a7a36dc0c97807b01e08b672686f4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="http://s95.cnzz.com/z_stat.php?id=1260196456&web_id=1260196456" language="JavaScript"></script>
+  </div>
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Vincent Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                KVM安装虚拟机
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-11-03T18:15:08+08:00" content="2016-11-03">
+              2016-11-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/kvm/" itemprop="url" rel="index">
+                    <span itemprop="name">kvm</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="一-qcow2格式磁盘文件"><a href="#一-qcow2格式磁盘文件" class="headerlink" title="一.qcow2格式磁盘文件"></a>一.qcow2格式磁盘文件</h1><p>Qcow2镜像格式是qemu支持的磁盘镜像格式之一。qcow2的表现形式为在一个文件中模拟一个固定大小的块设备。对与qcow2格式，相对于raw格式来说，有几个优点：<br>更小的文件大小，即使是不支持holes的文件系统也可以（这样的话，ls跟du看到的就一样了)；<br>Copy-on-write的支持；<br>快照的支持，可以维护多个快照；<br>基于zlib的压缩；<br>AES加密</p>
+<a id="more"></a>
+<h1 id="二-安装Linux虚拟机"><a href="#二-安装Linux虚拟机" class="headerlink" title="二.安装Linux虚拟机"></a>二.安装Linux虚拟机</h1><p>创建虚拟磁盘<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">qemu-img  create -f qcow2 centos1.qcow2 100G</span><br><span class="line"><span class="comment">#本地镜像安装</span></span><br><span class="line">virt-install --name centos6-1  --ram 2048 <span class="attribute">--vcpus</span>=2  \</span><br><span class="line"><span class="attribute">--cdrom</span>=/data/centos6.5/CentOS-6.5-x86_64-bin-DVD1.iso \</span><br><span class="line"><span class="attribute">--os-type</span>=linux \</span><br><span class="line">--accelerate \</span><br><span class="line"><span class="attribute">--disk</span>=/data/images/centos6-1.img,size=100,format=qcow2 \</span><br><span class="line"><span class="attribute">--bridge</span>=br0  --vnc <span class="attribute">--vncport</span>=5900 <span class="attribute">--vnclisten</span>=0.0.0.0 \</span><br><span class="line">--force --autostart</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#NFS安装</span><br><span class="line">virt-install --name centos6-1  --ram 2048 --vcpus=2  \</span><br><span class="line">-<span class="ruby">-location=<span class="symbol">nfs:</span><span class="number">192.168</span>.<span class="number">1.13</span><span class="symbol">:/data/ftp/iso/CentOS-</span><span class="number">7</span>-x86_64-DVD-<span class="number">1503</span>-<span class="number">01</span>.iso --os-type=linux \</span></span><br><span class="line"><span class="ruby">--accelerate \</span></span><br><span class="line"><span class="ruby">--disk=<span class="regexp">/data/images</span><span class="regexp">/centos6-1.qcow2,size=100,format=qcow2 \</span></span></span><br><span class="line"><span class="ruby">--bridge=br<span class="number">0</span>  --vnc --vncport=<span class="number">5910</span> --vnclisten=<span class="number">0</span>.<span class="number">0</span>.<span class="number">0</span>.<span class="number">0</span> \</span></span><br><span class="line"><span class="ruby">--force --autostart</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#kicstart无人值守安装</span><br><span class="line">virt-install --name centos6-1  --ram 2048 --vcpus=2  \</span><br><span class="line">-<span class="ruby">-location=<span class="symbol">nfs:</span><span class="number">192.168</span>.<span class="number">1.13</span><span class="symbol">:/data/centos6</span>.<span class="number">5</span> --extra-args=<span class="string">"ks=nfs:192.168.1.13:/data/centos6.5/ks/ks.cfg"</span> \</span></span><br><span class="line"><span class="ruby">--os-type=linux \</span></span><br><span class="line"><span class="ruby">--accelerate \</span></span><br><span class="line"><span class="ruby">--disk=<span class="regexp">/data/images</span><span class="regexp">/centos6-1.qcow2,size=100,format=qcow2 \</span></span></span><br><span class="line"><span class="ruby">--bridge=br<span class="number">0</span>  --vnc --vncport=<span class="number">5920</span> --vnclisten=<span class="number">0</span>.<span class="number">0</span>.<span class="number">0</span>.<span class="number">0</span> \</span></span><br><span class="line"><span class="ruby">--force --autostart</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#PXE启动</span></span><br><span class="line">virt-install <span class="params">--name</span> centos6-1  <span class="params">--ram</span> 2048 <span class="params">--vcpus=2</span>  \</span><br><span class="line"><span class="params">--pxe</span> \</span><br><span class="line"><span class="params">--os-type=linux</span> \</span><br><span class="line"><span class="params">--accelerate</span> \</span><br><span class="line"><span class="params">--disk=/data/images/centos6-1</span>.qcow2,size=100,format=qcow2 \</span><br><span class="line"><span class="params">--bridge=br0</span>  <span class="params">--vnc</span> <span class="params">--vncport=5920</span> <span class="params">--vnclisten=0</span>.0.0.0 \</span><br><span class="line"><span class="params">--force</span> <span class="params">--autostart</span></span><br></pre></td></tr></table></figure>
+<p>用VNC连接完成虚拟机后续安装</p>
+<h1 id="三-安装WINDOWS虚拟机"><a href="#三-安装WINDOWS虚拟机" class="headerlink" title="三.安装WINDOWS虚拟机"></a>三.安装WINDOWS虚拟机</h1><p>注意WINDOWS安装镜像不能是GHOST的。<br>说明：KVM默认使用的硬盘格式为virtio。<br>使用virtio接口的硬盘，我们必须加载virtio硬盘驱动。如果不加载该驱动windows installer会无法找到虚拟磁盘<br>virtio驱动程序安装</p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget <span class="symbol">https:</span>/<span class="regexp">/fedorapeople.org/groups</span><span class="regexp">/virt/virtio</span>-win/virtio-win.repo -O /etc/yum.repos.d/virtio-win.repo</span><br><span class="line">yum install virtio-win</span><br></pre></td></tr></table></figure>
+<p>安装虚拟机</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">virt-install --name win7  --ram 2048 <span class="attribute">--vcpus</span>=2  <span class="attribute">--cdrom</span>=/data/ftp/iso/Win7SP1_64_AZB_159.iso \</span><br><span class="line"><span class="attribute">--os-type</span>=windows <span class="attribute">--disk</span>=/data/images/win7.img,size=50,format=qcow2,bus=virtio \</span><br><span class="line"><span class="attribute">--bridge</span>=br0  --vnc <span class="attribute">--vncport</span>=5911 <span class="attribute">--vnclisten</span>=0.0.0.0  \</span><br><span class="line">--disk <span class="attribute">path</span>=/usr/share/virtio-win/virtio-win.iso,device=cdrom</span><br></pre></td></tr></table></figure>
+<p>注意以上命令中：-disk path=/usr/share/virtio-win/virtio-win.iso,device=cdrom表示把virtio-win.iso镜像文件已光驱的形式挂载到系统中。virtio-win.iso是virtio的驱动程序文件。</p>
+<p>用VNC连接完成虚拟机后续安装</p>
+<p><img src="http://ww4.sinaimg.cn/mw690/6e9a4d0bgw1f971asgxk2j20cl05yq39.jpg" alt=""><br><img src="http://ww2.sinaimg.cn/large/6e9a4d0bgw1f971ckctzpj20mo0hqmy0.jpg" alt=""><br><img src="http://ww4.sinaimg.cn/large/6e9a4d0bgw1f971cxjrbwj20mo0hqdgy.jpg" alt=""><br><img src="http://ww2.sinaimg.cn/large/6e9a4d0bgw1f971d2ydv1j20mo0hqdhc.jpg" alt=""></p>
+<p>选择自定义</p>
+<p><img src="http://ww3.sinaimg.cn/large/6e9a4d0bgw1f971f5d83dj20mo0hqdh3.jpg" alt=""></p>
+<p>默认无法看到磁盘,先要加载驱动程序</p>
+<p><img src="http://ww1.sinaimg.cn/large/6e9a4d0bgw1f971fxjw1sj20mo0hq3zk.jpg" alt=""><br>浏览</p>
+<p><img src="http://ww2.sinaimg.cn/large/6e9a4d0bgw1f971fk337aj20mo0hqgmx.jpg" alt=""><br>找到对应的驱动</p>
+<p><img src="http://ww4.sinaimg.cn/large/6e9a4d0bgw1f971gahlwxj20mo0hq75h.jpg" alt=""><br>下一步</p>
+<p><img src="http://ww4.sinaimg.cn/large/6e9a4d0bgw1f971gh5pb2j20mo0hqab2.jpg" alt=""><br>磁盘正常加载了，下一步</p>
+<p><img src="http://ww4.sinaimg.cn/large/6e9a4d0bgw1f971h2flb0j20mo0hq75a.jpg" alt=""><br>开始安装</p>
+<p><img src="http://ww4.sinaimg.cn/large/6e9a4d0bgw1f971h6ski3j20mo0hqdgo.jpg" alt=""></p>
+<h1 id="四-virt-install参数说明"><a href="#四-virt-install参数说明" class="headerlink" title="四.virt-install参数说明"></a>四.virt-install参数说明</h1><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby">n --name= 客户端虚拟机名称</span></span><br><span class="line"><span class="ruby">-r --ram=  客户端虚拟机分配的内存</span></span><br><span class="line"><span class="ruby">-u --uuid= 客户端UUID</span></span><br><span class="line"><span class="ruby">--vcpus=<span class="number">2</span> 客户端的vcpu个数</span></span><br><span class="line"><span class="ruby">-v --hvm 全虚拟化</span></span><br><span class="line"><span class="ruby">-p --paravirt 半虚拟化</span></span><br><span class="line"><span class="ruby">-l --location=localdir 安装源</span></span><br><span class="line"><span class="ruby">--vnc 使用vnc</span></span><br><span class="line"><span class="ruby">-c --cdrom= 光驱 安装途径</span></span><br><span class="line"><span class="ruby">-s --file-size= 使用磁盘映像的大小 单位为GB</span></span><br><span class="line"><span class="ruby">-f --file= 作为磁盘映像使用的文件</span></span><br><span class="line"><span class="ruby">--disk= 使用不同选项作为磁盘使用安装介质</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="uploads/wechatpay.jpg" alt="Vincent WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="uploads/alipay.jpg" alt="Vincent Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/kvm/" rel="tag">#kvm</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Nginx-https配置.html" rel="next" title="Nginx https配置">
+                <i class="fa fa-chevron-left"></i> Nginx https配置
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Nginx-特定略缩图片大小配置.html" rel="prev" title="Nginx 限定略缩图片大小配置">
+                Nginx 限定略缩图片大小配置 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/vincent.png"
+               alt="Vincent" />
+          <p class="site-author-name" itemprop="name">Vincent</p>
+          <p class="site-description motion-element" itemprop="description">为了无法计算的价值</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">79</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">88</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/vincent927" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/liuhuan19910927" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一-qcow2格式磁盘文件"><span class="nav-number">1.</span> <span class="nav-text">一.qcow2格式磁盘文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二-安装Linux虚拟机"><span class="nav-number">2.</span> <span class="nav-text">二.安装Linux虚拟机</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三-安装WINDOWS虚拟机"><span class="nav-number">3.</span> <span class="nav-text">三.安装WINDOWS虚拟机</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四-virt-install参数说明"><span class="nav-number">4.</span> <span class="nav-text">四.virt-install参数说明</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vincent</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Muse
+  </a>
+</div>
+
+<div>
+<a href="http://www.miitbeian.gov.cn/" rel="external nofollow">粤ICP备16107811号</a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

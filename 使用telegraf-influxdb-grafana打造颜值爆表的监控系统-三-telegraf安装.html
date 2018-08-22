@@ -1,0 +1,699 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="baidu-site-verification" content="LJgfOWhkKl" />
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="zabbix,grafana,telegraf,influxdb,monitoring," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="简介Telegraf是一个用于收集和报告指标的插件驱动的服务器代理，是TICK堆栈的第一部分。Telegraf具有插件，可直接从运行的系统获取各种指标，从第三方API提取指标，甚至通过statsd和Kafka消费者服务监听指标。它还具有输出插件，用于向各种其他数据存储，服务和消息队列发送指标，包括InfluxDB，Graphite，OpenTSDB，Datadog，Librato，Kafka，MQ">
+<meta name="keywords" content="zabbix,grafana,telegraf,influxdb,monitoring">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用telegraf,influxdb,grafana打造颜值爆表的监控系统(三)-telegraf安装">
+<meta property="og:url" content="http://vincentblog.cn/使用telegraf-influxdb-grafana打造颜值爆表的监控系统-三-telegraf安装.html">
+<meta property="og:site_name" content="Vincent Blog">
+<meta property="og:description" content="简介Telegraf是一个用于收集和报告指标的插件驱动的服务器代理，是TICK堆栈的第一部分。Telegraf具有插件，可直接从运行的系统获取各种指标，从第三方API提取指标，甚至通过statsd和Kafka消费者服务监听指标。它还具有输出插件，用于向各种其他数据存储，服务和消息队列发送指标，包括InfluxDB，Graphite，OpenTSDB，Datadog，Librato，Kafka，MQ">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-08-22T01:39:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用telegraf,influxdb,grafana打造颜值爆表的监控系统(三)-telegraf安装">
+<meta name="twitter:description" content="简介Telegraf是一个用于收集和报告指标的插件驱动的服务器代理，是TICK堆栈的第一部分。Telegraf具有插件，可直接从运行的系统获取各种指标，从第三方API提取指标，甚至通过statsd和Kafka消费者服务监听指标。它还具有输出插件，用于向各种其他数据存储，服务和消息队列发送指标，包括InfluxDB，Graphite，OpenTSDB，Datadog，Librato，Kafka，MQ">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 9929411,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://vincentblog.cn/使用telegraf-influxdb-grafana打造颜值爆表的监控系统-三-telegraf安装.html"/>
+
+
+  <title> 使用telegraf,influxdb,grafana打造颜值爆表的监控系统(三)-telegraf安装 | Vincent Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?e78a7a36dc0c97807b01e08b672686f4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="http://s95.cnzz.com/z_stat.php?id=1260196456&web_id=1260196456" language="JavaScript"></script>
+  </div>
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Vincent Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                使用telegraf,influxdb,grafana打造颜值爆表的监控系统(三)-telegraf安装
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-02-07T10:53:09+08:00" content="2017-02-07">
+              2017-02-07
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/monitoring/" itemprop="url" rel="index">
+                    <span itemprop="name">monitoring</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>Telegraf是一个用于收集和报告指标的插件驱动的服务器代理，是TICK堆栈的第一部分。Telegraf具有插件，可直接从运行的系统获取各种指标，从第三方API提取指标，甚至通过statsd和Kafka消费者服务监听指标。它还具有输出插件，用于向各种其他数据存储，服务和消息队列发送指标，包括InfluxDB，Graphite，OpenTSDB，Datadog，Librato，Kafka，MQTT，NSQ等。</p>
+<a id="more"></a>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https:<span class="comment">//dl.influxdata.com/telegraf/releases/telegraf-1.2.1.x86_64.rpm</span></span><br><span class="line">sudo yum localinstall telegraf-<span class="number">1.2</span>.<span class="number">1</span><span class="selector-class">.x86_64</span><span class="selector-class">.rpm</span></span><br></pre></td></tr></table></figure>
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><p>默认配置文件在这里<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/etc/</span>telegraf<span class="regexp">/telegraf.conf</span></span><br></pre></td></tr></table></figure></p>
+<p>在下面的示例中，我们创建一个名为telegraf.conf的配置文件，其中包含两个输入：一个用于读取有关系统cpu使用率（cpu）的度量标准，另一个用于读取有关系统内存使用率（mem）的度量标准。我们将InfluxDB指定为所需的输出。<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">telegraf -sample-config -<span class="built_in">input</span>-<span class="built_in">filter</span> cpu:mem -output-<span class="built_in">filter</span> influxdb &gt; /etc/telegraf/telegraf.<span class="keyword">conf</span></span><br></pre></td></tr></table></figure></p>
+<p>这里分享一个我目前用的telegraf的部分配置文件，主要是对主机的监控</p>
+<p><strong>telegraf input插件配置</strong><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">[[inputs.net]]</span><br><span class="line"><span class="meta">#</span><span class="bash">   <span class="comment">## By default, telegraf gathers stats from any up interface (excluding loopback)</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">   <span class="comment">## Setting interfaces will tell it to gather these explicit interfaces,</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">   <span class="comment">## regardless of status.</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">   <span class="comment">##</span></span></span><br><span class="line">interfaces = ["eth0"]</span><br><span class="line">[[inputs.cpu]]</span><br><span class="line"><span class="meta">  #</span><span class="bash"><span class="comment"># Whether to report per-cpu stats or not</span></span></span><br><span class="line">  percpu = true</span><br><span class="line"><span class="meta">  #</span><span class="bash"><span class="comment"># Whether to report total system cpu stats or not</span></span></span><br><span class="line">  totalcpu = true</span><br><span class="line"><span class="meta">  #</span><span class="bash"><span class="comment"># If true, collect raw CPU time metrics.</span></span></span><br><span class="line">  collect_cpu_time = false</span><br><span class="line"><span class="meta">#</span><span class="bash"> Read metrics about disk usage by mount point</span></span><br><span class="line">[[inputs.disk]]</span><br><span class="line"><span class="meta">  #</span><span class="bash"><span class="comment"># By default, telegraf gather stats for all mountpoints.</span></span></span><br><span class="line"><span class="meta">  #</span><span class="bash"><span class="comment"># Setting mountpoints will restrict the stats to the specified mountpoints.</span></span></span><br><span class="line"><span class="meta">  #</span><span class="bash"> mount_points = [<span class="string">"/"</span>]</span></span><br><span class="line"></span><br><span class="line"><span class="meta">  #</span><span class="bash"><span class="comment"># Ignore some mountpoints by filesystem type. For example (dev)tmpfs (usually</span></span></span><br><span class="line"><span class="meta">  #</span><span class="bash"><span class="comment"># present on /run, /var/run, /dev/shm or /dev).</span></span></span><br><span class="line">  ignore_fs = ["tmpfs", "devtmpfs"]</span><br><span class="line"><span class="meta">#</span><span class="bash"> Read metrics about disk IO by device</span></span><br><span class="line">[[inputs.diskio]]</span><br><span class="line"><span class="meta">  #</span><span class="bash"><span class="comment"># By default, telegraf will gather stats for all devices including</span></span></span><br><span class="line"><span class="meta">  #</span><span class="bash"><span class="comment"># disk partitions.</span></span></span><br><span class="line"><span class="meta">  #</span><span class="bash"><span class="comment"># Setting devices will restrict the stats to the specified devices.</span></span></span><br><span class="line"><span class="meta">  #</span><span class="bash"> devices = [<span class="string">"sda"</span>, <span class="string">"sdb"</span>]</span></span><br><span class="line"><span class="meta">  #</span><span class="bash"><span class="comment"># Uncomment the following line if you need disk serial numbers.</span></span></span><br><span class="line"><span class="meta">  #</span><span class="bash"> skip_serial_number = <span class="literal">false</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> Get kernel statistics from /proc/<span class="built_in">stat</span></span></span><br><span class="line">[[inputs.kernel]]</span><br><span class="line"><span class="meta">  #</span><span class="bash"> no configuration</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> Read metrics about memory usage</span></span><br><span class="line">[[inputs.mem]]</span><br><span class="line"><span class="meta">  #</span><span class="bash"> no configuration</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> Get the number of processes and group them by status</span></span><br><span class="line">[[inputs.processes]]</span><br><span class="line"><span class="meta">  #</span><span class="bash"> no configuration</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> Read metrics about swap memory usage</span></span><br><span class="line">[[inputs.swap]]</span><br><span class="line">[[inputs.system]]</span><br><span class="line">[[inputs.netstat]]</span><br></pre></td></tr></table></figure></p>
+<p><strong>telegraf output插件配置</strong><br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">[[outputs.influxdb]]</span><br><span class="line">  ## The full HTTP <span class="keyword">or</span> UDP endpoint URL <span class="keyword">for</span> your InfluxDB instance.</span><br><span class="line">  ## Multiple urls can be specified as part of the same cluster,</span><br><span class="line">  ## this means that only ONE of the urls will be written <span class="keyword">to</span> each interval.</span><br><span class="line">  # urls = [<span class="string">"udp://localhost:8089"</span>] # UDP endpoint example</span><br><span class="line">  urls = [<span class="string">"http://localhost:8086"</span>] # required</span><br><span class="line">  ## The target database <span class="keyword">for</span> metrics (telegraf will create it <span class="keyword">if</span> <span class="keyword">not</span> exists).</span><br><span class="line">  database = <span class="string">"telegraf"</span> # required</span><br><span class="line"></span><br><span class="line">  ## Retention<span class="built_in"> policy </span><span class="keyword">to</span> write <span class="keyword">to</span>. Empty string writes <span class="keyword">to</span> the<span class="built_in"> default </span>rp.</span><br><span class="line">  retention_policy = <span class="string">""</span></span><br><span class="line">  ## Write consistency (clusters only), can be: <span class="string">"any"</span>, <span class="string">"one"</span>, <span class="string">"quorum"</span>, <span class="string">"all"</span></span><br><span class="line">  write_consistency = <span class="string">"any"</span></span><br><span class="line"></span><br><span class="line">  ## Write timeout (<span class="keyword">for</span> the InfluxDB client), formatted as a string.</span><br><span class="line">  ## <span class="keyword">If</span> <span class="keyword">not</span> provided, will<span class="built_in"> default </span><span class="keyword">to</span> 5s. 0s means <span class="literal">no</span> timeout (<span class="keyword">not</span> recommended).</span><br><span class="line">  timeout = <span class="string">"5s"</span></span><br><span class="line">  # username = <span class="string">"telegraf"</span></span><br><span class="line">  # password = <span class="string">"metricsmetricsmetricsmetrics"</span></span><br><span class="line">  ## <span class="builtin-name">Set</span> the<span class="built_in"> user </span>agent <span class="keyword">for</span> HTTP POSTs (can be useful <span class="keyword">for</span> log differentiation)</span><br><span class="line">  # user_agent = <span class="string">"telegraf"</span></span><br><span class="line">  ## <span class="builtin-name">Set</span> UDP payload size, defaults <span class="keyword">to</span> InfluxDB UDP<span class="built_in"> Client default </span>(512 bytes)</span><br><span class="line">  # udp_payload = 512</span><br><span class="line"></span><br><span class="line">  ## Optional SSL Config</span><br><span class="line">  # ssl_ca = <span class="string">"/etc/telegraf/ca.pem"</span></span><br><span class="line">  # ssl_cert = <span class="string">"/etc/telegraf/cert.pem"</span></span><br><span class="line">  # ssl_key = <span class="string">"/etc/telegraf/key.pem"</span></span><br><span class="line">  ## Use SSL but skip chain &amp; host verification</span><br><span class="line">  # insecure_skip_verify = <span class="literal">false</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h1><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo<span class="built_in"> service </span>telegraf start</span><br></pre></td></tr></table></figure>
+<h1 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h1><p>默认的日志文件在<code>/var/log/telegraf/telegfrad.log</code></p>
+<p>更多的数据收集请参考官档的插件介绍</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://docs.influxdata.com/telegraf/v1.2/" target="_blank" rel="noopener">https://docs.influxdata.com/telegraf/v1.2/</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="uploads/wechatpay.jpg" alt="Vincent WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="uploads/alipay.jpg" alt="Vincent Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/zabbix/" rel="tag">#zabbix</a>
+          
+            <a href="/tags/grafana/" rel="tag">#grafana</a>
+          
+            <a href="/tags/telegraf/" rel="tag">#telegraf</a>
+          
+            <a href="/tags/influxdb/" rel="tag">#influxdb</a>
+          
+            <a href="/tags/monitoring/" rel="tag">#monitoring</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/使用telegraf-influxdb-grafana打造颜值爆表的监控系统-二-influxdb安装.html" rel="next" title="使用telegraf,influxdb,grafana打造颜值爆表的监控系统(二)-influxdb安装">
+                <i class="fa fa-chevron-left"></i> 使用telegraf,influxdb,grafana打造颜值爆表的监控系统(二)-influxdb安装
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/使用telegraf-influxdb-grafana打造颜值爆表的监控系统-四-grafana安装.html" rel="prev" title="使用telegraf,influxdb,grafana打造颜值爆表的监控系统(四)-grafana安装">
+                使用telegraf,influxdb,grafana打造颜值爆表的监控系统(四)-grafana安装 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/vincent.png"
+               alt="Vincent" />
+          <p class="site-author-name" itemprop="name">Vincent</p>
+          <p class="site-description motion-element" itemprop="description">为了无法计算的价值</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">79</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">88</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/vincent927" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/liuhuan19910927" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置"><span class="nav-number">3.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#启动"><span class="nav-number">4.</span> <span class="nav-text">启动</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#日志"><span class="nav-number">5.</span> <span class="nav-text">日志</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vincent</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Muse
+  </a>
+</div>
+
+<div>
+<a href="http://www.miitbeian.gov.cn/" rel="external nofollow">粤ICP备16107811号</a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

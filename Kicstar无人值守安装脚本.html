@@ -1,0 +1,683 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="baidu-site-verification" content="LJgfOWhkKl" />
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="kicstart," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="这里分享一下我自己用的kiscstart无人值守安装脚本，个别地方可以根据自己实际情况稍作修改就可以用了，root初始密码是123456">
+<meta name="keywords" content="kicstart">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kicstar无人值守安装脚本">
+<meta property="og:url" content="http://vincentblog.cn/Kicstar无人值守安装脚本.html">
+<meta property="og:site_name" content="Vincent Blog">
+<meta property="og:description" content="这里分享一下我自己用的kiscstart无人值守安装脚本，个别地方可以根据自己实际情况稍作修改就可以用了，root初始密码是123456">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-08-22T01:39:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Kicstar无人值守安装脚本">
+<meta name="twitter:description" content="这里分享一下我自己用的kiscstart无人值守安装脚本，个别地方可以根据自己实际情况稍作修改就可以用了，root初始密码是123456">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 9929411,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://vincentblog.cn/Kicstar无人值守安装脚本.html"/>
+
+
+  <title> Kicstar无人值守安装脚本 | Vincent Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?e78a7a36dc0c97807b01e08b672686f4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="http://s95.cnzz.com/z_stat.php?id=1260196456&web_id=1260196456" language="JavaScript"></script>
+  </div>
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Vincent Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Kicstar无人值守安装脚本
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-11-24T10:16:05+08:00" content="2016-11-24">
+              2016-11-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这里分享一下我自己用的kiscstart无人值守安装脚本，个别地方可以根据自己实际情况稍作修改就可以用了，root初始密码是123456</p>
+<a id="more"></a>
+<h1 id="centos6"><a href="#centos6" class="headerlink" title="centos6"></a>centos6</h1><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#platform=x86, AMD64, or Intel EM64T</span></span><br><span class="line"><span class="comment">#version=DEVEL</span></span><br><span class="line"><span class="comment"># Firewall configuration</span></span><br><span class="line">firewall <span class="params">--disabled</span></span><br><span class="line">key <span class="params">--skip</span></span><br><span class="line"><span class="comment"># Install OS instead of upgrade</span></span><br><span class="line">install</span><br><span class="line"><span class="comment"># Use NFS installation media</span></span><br><span class="line">nfs <span class="params">--server=192</span>.168.1.13 <span class="params">--dir=/data/centos6</span>.5</span><br><span class="line"><span class="comment"># Root password</span></span><br><span class="line">rootpw <span class="params">--iscrypted</span> $1$uQxk.o1I$2vjGhmj5gAb46UE8czgPy1</span><br><span class="line"><span class="comment"># System authorization information</span></span><br><span class="line">auth  <span class="params">--useshadow</span>  <span class="params">--passalgo=sha512</span></span><br><span class="line"><span class="comment"># Use text mode install</span></span><br><span class="line">text</span><br><span class="line">firstboot <span class="params">--disable</span></span><br><span class="line"><span class="comment"># System keyboard</span></span><br><span class="line">keyboard us</span><br><span class="line"><span class="comment"># System language</span></span><br><span class="line">lang en_US</span><br><span class="line"><span class="comment"># SELinux configuration</span></span><br><span class="line">selinux <span class="params">--disabled</span></span><br><span class="line"><span class="comment"># Installation logging level</span></span><br><span class="line">logging <span class="params">--level=info</span></span><br><span class="line"><span class="comment"># Reboot after installation</span></span><br><span class="line">reboot</span><br><span class="line"><span class="comment"># System timezone</span></span><br><span class="line">timezone <span class="params">--isUtc</span> Asia/Shanghai</span><br><span class="line"><span class="comment"># Network information</span></span><br><span class="line">network  <span class="params">--bootproto=dhcp</span> <span class="params">--device=eth0</span> <span class="params">--onboot=on</span></span><br><span class="line"><span class="comment"># System bootloader configuration</span></span><br><span class="line">bootloader <span class="params">--append=</span><span class="string">"rhgb quiet"</span> <span class="params">--location=mbr</span></span><br><span class="line"><span class="comment"># Clear the Master Boot Record</span></span><br><span class="line">zerombr</span><br><span class="line"><span class="comment"># Partition clearing information</span></span><br><span class="line">clearpart <span class="params">--all</span> <span class="params">--initlabel</span> </span><br><span class="line"><span class="comment"># Disk partitioning information</span></span><br><span class="line"><span class="comment"># boot 分区200M</span></span><br><span class="line">part <span class="string">/boot</span> <span class="params">--asprimary</span> <span class="params">--fstype=</span><span class="string">"ext4"</span> <span class="params">--size=200</span></span><br><span class="line"><span class="comment">#swap虚拟内存8G</span></span><br><span class="line">part swap <span class="params">--fstype=</span><span class="string">"swap"</span> <span class="params">--size=8000</span></span><br><span class="line"><span class="comment">#/根目录分余下剩余的最带可用磁盘容量</span></span><br><span class="line">part / <span class="params">--asprimary</span> <span class="params">--fstype=</span><span class="string">"ext4"</span> <span class="params">--size=1</span> <span class="params">--grow</span></span><br><span class="line"></span><br><span class="line">%post <span class="params">--interpreter=/bin/bash</span></span><br><span class="line"><span class="comment">#下载阿里epel源</span></span><br><span class="line">wget -O <span class="string">/etc/yum.repos.d/epel.repo</span> http:<span class="string">//mirrors.aliyun.com/repo/epel-6.repo</span></span><br><span class="line">yum clean all</span><br><span class="line">yum makecache</span><br><span class="line"><span class="comment"># 下载常用的工具包</span></span><br><span class="line">yum install vim  lrzsz wget iotop iftop -y</span><br><span class="line"><span class="comment">#关闭防火墙</span></span><br><span class="line">chkconfig iptables off</span><br><span class="line">%end</span><br><span class="line"></span><br><span class="line">%packages</span><br><span class="line">@additional-devel</span><br><span class="line">@base</span><br><span class="line">@development</span><br><span class="line">@scalable-file-systems</span><br><span class="line">@server-platform-devel</span><br><span class="line">%end</span><br></pre></td></tr></table></figure>
+<h1 id="centos7"><a href="#centos7" class="headerlink" title="centos7"></a>centos7</h1><figure class="highlight tcl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#platform=x86, AMD64, 或 Intel EM64T</span></span><br><span class="line"><span class="comment">#version=DEVEL</span></span><br><span class="line"><span class="comment"># Install OS instead of upgrade</span></span><br><span class="line">install</span><br><span class="line"><span class="comment"># Keyboard layouts</span></span><br><span class="line">keyboard <span class="string">'us'</span></span><br><span class="line"><span class="comment"># Run the Setup Agent on first boot</span></span><br><span class="line">firstboot --enable</span><br><span class="line"><span class="comment"># Root password</span></span><br><span class="line">rootpw --iscrypted $<span class="number">1</span>$InEP1xKU$LL8PKCY.fhVkkSnfXA34y1</span><br><span class="line"><span class="comment"># System timezone</span></span><br><span class="line">timezone Asia/Shanghai</span><br><span class="line"><span class="comment"># System language</span></span><br><span class="line">lang en_US</span><br><span class="line"><span class="comment"># Firewall configuration</span></span><br><span class="line">firewall --disabled</span><br><span class="line"><span class="comment"># System authorization information</span></span><br><span class="line">auth  --useshadow  --passalgo=sha512</span><br><span class="line"><span class="comment"># Use text mode install</span></span><br><span class="line">text</span><br><span class="line"><span class="comment"># SELinux configuration</span></span><br><span class="line">selinux --disabled</span><br><span class="line"><span class="comment"># Do not configure the X Window System</span></span><br><span class="line">skipx</span><br><span class="line"></span><br><span class="line"><span class="comment"># Use NFS installation media</span></span><br><span class="line">nfs --server=<span class="number">192.168</span><span class="number">.1</span><span class="number">.13</span> --dir=/data/centos7</span><br><span class="line"><span class="comment"># Network information</span></span><br><span class="line">network  --bootproto=dhcp --device=eth0</span><br><span class="line"><span class="comment"># Reboot after installation</span></span><br><span class="line">reboot</span><br><span class="line"><span class="comment"># System bootloader configuration</span></span><br><span class="line">bootloader --location=mbr</span><br><span class="line"><span class="comment"># Clear the Master Boot Record</span></span><br><span class="line">zerombr</span><br><span class="line"><span class="comment"># Partition clearing information</span></span><br><span class="line">clearpart --all --initlabel</span><br><span class="line"><span class="comment"># Disk partitioning information</span></span><br><span class="line">part /boot --fstype=<span class="string">"xfs"</span> --size=<span class="number">500</span></span><br><span class="line">part swap --fstype=<span class="string">"swap"</span> --size=<span class="number">8192</span></span><br><span class="line">part / --asprimary --fstype=<span class="string">"xfs"</span> --grow --size=<span class="number">1</span></span><br><span class="line"></span><br><span class="line">%post --interpreter=/bin/bash</span><br><span class="line"></span><br><span class="line"><span class="comment">#阿里Yum源</span></span><br><span class="line">yum -y install wget</span><br><span class="line"><span class="keyword">cd</span> /etc/yum.repos.d/</span><br><span class="line">mkdir bak</span><br><span class="line">mv ./*.repo bak</span><br><span class="line">wget -O /etc/yum.repos.d/CentOS-Base.repo <span class="keyword">http</span>://mirrors.aliyun.com/repo/Centos<span class="number">-7.</span>repo</span><br><span class="line">wget -O /etc/yum.repos.d/epel.repo <span class="keyword">http</span>://mirrors.aliyun.com/repo/epel<span class="number">-7.</span>repo</span><br><span class="line">yum clean all &amp;&amp; yum makecache</span><br><span class="line"><span class="comment">#基本组件安装</span></span><br><span class="line">yum install net-tools lrzsz gcc gcc-c++ make cmake libxml2-devel openssl-devel curl curl-devel unzip sudo ntp libaio-devel wget vim ncurses-devel autoconf automake zlib-devel  python-devel python-pip iftop iotop lsof -y</span><br><span class="line"><span class="comment">#开启包转发</span></span><br><span class="line">echo <span class="string">"1"</span> &gt; /<span class="keyword">proc</span>/sys/net/ipv4/ip_forward</span><br><span class="line">echo "net.ipv4.ip_forward = 1"  &gt;&gt; /usr/lib/sysctl.d/00-system.conf</span><br><span class="line">#selinux</span><br><span class="line">setenforce 0</span><br><span class="line">sed -i  "s/enforcing/disabled/" /etc/sysconfig/selinux</span><br><span class="line">#ssh服务安全配置</span><br><span class="line">tee -a  /etc/ssh/sshd_config &lt;&lt;<span class="title"> EOF</span></span><br><span class="line"><span class="title">Port</span> 12345 #修改默认ssh端口</span><br><span class="line">PermitRootLogin<span class="title"> no</span>  #拒绝root用户远程登录</span><br><span class="line">PermitEmptyPasswords<span class="title"> no</span> #拒绝空密码登录</span><br><span class="line">UseDNS<span class="title"> no</span> #不适用DNS解析</span><br><span class="line">EOF</span><br><span class="line">systemctl<span class="title"> restart</span> sshd</span><br><span class="line">#时间同步</span><br><span class="line">/usr/sbin/ntpdate<span class="title"> pool.ntp.org</span></span><br><span class="line"><span class="title">echo</span> "* */5 * * * /usr/sbin/ntpdate<span class="title"> pool.ntp.org</span> &gt; /dev/null 2&gt;&amp;1" &gt;&gt; /var/spool/cron/root;chmod 600 /var/spool/cron/root</span><br><span class="line">#最大文件描述符</span><br><span class="line">echo "ulimit -SHn 102400" &gt;&gt; /etc/rc.local</span><br><span class="line">cat &gt;&gt; /etc/security/limits.conf &lt;&lt;<span class="title"> EOF</span></span><br><span class="line"><span class="title"></span> *<span class="title">           soft</span> <span class="title">  nofile</span>       102400</span><br><span class="line"> *<span class="title">           hard</span> <span class="title">  nofile</span>       102400</span><br><span class="line"> *<span class="title">           soft</span> <span class="title">  nproc</span>        102400</span><br><span class="line"> *<span class="title">           hard</span> <span class="title">  nproc</span>        102400</span><br><span class="line">EOF</span><br><span class="line">#内核参数优化</span><br><span class="line">cp /etc/sysctl.conf /et/sysctl.conf.bak</span><br><span class="line">cat &gt; /etc/sysctl.conf &lt;&lt;<span class="title"> EOF</span></span><br><span class="line"><span class="title"></span> net.ipv4.ip_forward = 0</span><br><span class="line"><span class="title"> net.ipv4.conf.default.rp_filter</span> = 1</span><br><span class="line"><span class="title"> net.ipv4.conf.default.accept_source_route</span> = 0</span><br><span class="line"><span class="title"> kernel.sysrq</span> = 0</span><br><span class="line"><span class="title"> kernel.core_uses_pid</span> = 1</span><br><span class="line"><span class="title"> net.ipv4.tcp_syncookies</span> = 1</span><br><span class="line"><span class="title"> kernel.msgmnb</span> = 65536</span><br><span class="line"><span class="title"> kernel.msgmax</span> = 65536</span><br><span class="line"><span class="title"> kernel.shmmax</span> = 68719476736</span><br><span class="line"><span class="title"> kernel.shmall</span> = 4294967296</span><br><span class="line"><span class="title"> net.ipv4.tcp_max_tw_buckets</span> = 6000</span><br><span class="line"><span class="title"> net.ipv4.tcp_sack</span> = 1</span><br><span class="line"><span class="title"> net.ipv4.tcp_window_scaling</span> = 1</span><br><span class="line"><span class="title"> net.ipv4.tcp_rmem</span> = 4096 87380 4194304</span><br><span class="line"><span class="title"> net.ipv4.tcp_wmem</span> = 4096 16384 4194304</span><br><span class="line"><span class="title"> net.core.wmem_default</span> = 8388608</span><br><span class="line"><span class="title"> net.core.rmem_default</span> = 8388608</span><br><span class="line"><span class="title"> net.core.rmem_max</span> = 16777216</span><br><span class="line"><span class="title"> net.core.wmem_max</span> = 16777216</span><br><span class="line"><span class="title"> net.core.netdev_max_backlog</span> = 262144</span><br><span class="line"><span class="title"> net.core.somaxconn</span> = 262144</span><br><span class="line"><span class="title"> net.ipv4.tcp_max_orphans</span> = 3276800</span><br><span class="line"><span class="title"> net.ipv4.tcp_max_syn_backlog</span> = 262144</span><br><span class="line"><span class="title"> net.ipv4.tcp_timestamps</span> = 0</span><br><span class="line"><span class="title"> net.ipv4.tcp_synack_retries</span> = 1</span><br><span class="line"><span class="title"> net.ipv4.tcp_syn_retries</span> = 1</span><br><span class="line"><span class="title"> net.ipv4.tcp_tw_recycle</span> = 1</span><br><span class="line"><span class="title"> net.ipv4.tcp_tw_reuse</span> = 1</span><br><span class="line"><span class="title"> net.ipv4.tcp_mem</span> = 94500000 915000000 927000000</span><br><span class="line"><span class="title"> net.ipv4.tcp_fin_timeout</span> = 1</span><br><span class="line"><span class="title"> net.ipv4.tcp_keepalive_time</span> = 1200</span><br><span class="line"><span class="title"> net.ipv4.ip_local_port_range</span> = 1024 65535</span><br><span class="line">EOF</span><br><span class="line">/sbin/sysctl -p</span><br><span class="line">#防火墙</span><br><span class="line">yum<span class="title"> install</span> iptables-services -y</span><br><span class="line">cat &gt; /etc/sysconfig/iptables &lt;&lt;<span class="title"> EOF</span></span><br><span class="line"><span class="title">#</span> Firewall<span class="title"> configuration</span> written<span class="title"> by</span> system-config-securitylevel</span><br><span class="line">#<span class="title"> Manual</span> customization<span class="title"> of</span> this<span class="title"> file</span> is<span class="title"> not</span> recommended.</span><br><span class="line">*filter</span><br><span class="line">:INPUT<span class="title"> DROP</span> [0:0]</span><br><span class="line">:FORWARD<span class="title"> ACCEPT</span> [0:0]</span><br><span class="line">:OUTPUT<span class="title"> ACCEPT</span> [0:0]</span><br><span class="line">:syn-flood - [0:0]</span><br><span class="line">-A<span class="title"> INPUT</span> -i<span class="title"> lo</span> -j<span class="title"> ACCEPT</span></span><br><span class="line"><span class="title">-A</span> INPUT -m<span class="title"> state</span> --state<span class="title"> RELATED,ESTABLISHED</span> -j<span class="title"> ACCEPT</span></span><br><span class="line"><span class="title">-A</span> INPUT -p<span class="title"> tcp</span> -m<span class="title"> state</span> --state<span class="title"> NEW</span> -m<span class="title"> tcp</span> --dport 12345 -j<span class="title"> ACCEPT</span></span><br><span class="line"><span class="title">-A</span> INPUT -p<span class="title"> icmp</span> -m<span class="title"> limit</span> --limit 100/sec --limit-burst 100 -j<span class="title"> ACCEPT</span></span><br><span class="line"><span class="title">-A</span> INPUT -p<span class="title"> icmp</span> -m<span class="title"> limit</span> --limit 1/s --limit-burst 10 -j<span class="title"> ACCEPT</span></span><br><span class="line"><span class="title">-A</span> INPUT -p<span class="title"> tcp</span> -m<span class="title"> tcp</span> --tcp-flags<span class="title"> FIN,SYN,RST,ACK</span> SYN -j<span class="title"> syn-flood</span></span><br><span class="line"><span class="title">-A</span> INPUT -j<span class="title"> REJECT</span> --reject-with<span class="title"> icmp-host-prohibited</span></span><br><span class="line"><span class="title">-A</span> syn-flood -p<span class="title"> tcp</span> -m<span class="title"> limit</span> --limit 3/sec --limit-burst 6 -j<span class="title"> RETURN</span></span><br><span class="line"><span class="title">-A</span> syn-flood -j<span class="title"> REJECT</span> --reject-with<span class="title"> icmp-port-unreachable</span></span><br><span class="line"><span class="title">COMMIT</span></span><br><span class="line"><span class="title">EOF</span></span><br><span class="line"><span class="title">/sbin/service</span> iptables<span class="title"> restart</span></span><br><span class="line"><span class="title">systemctl</span> enable<span class="title"> iptables</span></span><br><span class="line"><span class="title">#pip</span></span><br><span class="line"><span class="title">mkdir</span> ~/.pip</span><br><span class="line">tee ~/.pip/pip.conf &lt;&lt;<span class="title"> EOF</span></span><br><span class="line"><span class="title">[global]</span></span><br><span class="line"><span class="title">index-url</span> =<span class="title"> http://mirrors.aliyun.com/pypi/simple/</span></span><br><span class="line"><span class="title"></span></span><br><span class="line"><span class="title">[install]</span></span><br><span class="line"><span class="title">trusted-host=mirrors.aliyun.com</span></span><br><span class="line"><span class="title">EOF</span></span><br><span class="line"><span class="title">pip</span> install --upgrade<span class="title"> pip</span></span><br><span class="line"><span class="title">%end</span></span><br><span class="line"><span class="title"></span></span><br><span class="line"><span class="title">%packages</span></span><br><span class="line"><span class="title">@base</span></span><br><span class="line"><span class="title">@core</span></span><br><span class="line"><span class="title">@development</span></span><br><span class="line"><span class="title">@hardware-monitoring</span></span><br><span class="line"><span class="title">@performance</span></span><br><span class="line"><span class="title">@remote-system-management</span></span><br><span class="line"><span class="title">%end</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="uploads/wechatpay.jpg" alt="Vincent WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="uploads/alipay.jpg" alt="Vincent Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/kicstart/" rel="tag">#kicstart</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/zabbix触发动作执行远程命令.html" rel="next" title="zabbix触发动作执行远程命令">
+                <i class="fa fa-chevron-left"></i> zabbix触发动作执行远程命令
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/devstack安装过程中pip报错timeout超时.html" rel="prev" title="devstack安装过程中pip报错timeout超时">
+                devstack安装过程中pip报错timeout超时 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/vincent.png"
+               alt="Vincent" />
+          <p class="site-author-name" itemprop="name">Vincent</p>
+          <p class="site-description motion-element" itemprop="description">为了无法计算的价值</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">79</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">88</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/vincent927" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/liuhuan19910927" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#centos6"><span class="nav-number">1.</span> <span class="nav-text">centos6</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#centos7"><span class="nav-number">2.</span> <span class="nav-text">centos7</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vincent</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Muse
+  </a>
+</div>
+
+<div>
+<a href="http://www.miitbeian.gov.cn/" rel="external nofollow">粤ICP备16107811号</a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

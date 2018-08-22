@@ -1,0 +1,718 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="baidu-site-verification" content="LJgfOWhkKl" />
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="redis,cluster," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Redis集群介绍 Redis 集群是一个提供在多个Redis间节点间共享数据的程序集。Redis集群并不支持处理多个keys的命令,因为这需要在不同的节点间移动数据,从而达不到像Redis那样的性能,在高负载的情况下可能会导致不可预料的错误.Redis 集群通过分区来提供一定程度的可用性,在实际环境中当某个节点宕机或者不可达的情况下继续处理命令. Redis 集群的优势:自动分割数据到不同的节点">
+<meta name="keywords" content="redis,cluster">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis 集群搭建">
+<meta property="og:url" content="http://vincentblog.cn/Redis-集群搭建.html">
+<meta property="og:site_name" content="Vincent Blog">
+<meta property="og:description" content="Redis集群介绍 Redis 集群是一个提供在多个Redis间节点间共享数据的程序集。Redis集群并不支持处理多个keys的命令,因为这需要在不同的节点间移动数据,从而达不到像Redis那样的性能,在高负载的情况下可能会导致不可预料的错误.Redis 集群通过分区来提供一定程度的可用性,在实际环境中当某个节点宕机或者不可达的情况下继续处理命令. Redis 集群的优势:自动分割数据到不同的节点">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-08-22T01:39:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Redis 集群搭建">
+<meta name="twitter:description" content="Redis集群介绍 Redis 集群是一个提供在多个Redis间节点间共享数据的程序集。Redis集群并不支持处理多个keys的命令,因为这需要在不同的节点间移动数据,从而达不到像Redis那样的性能,在高负载的情况下可能会导致不可预料的错误.Redis 集群通过分区来提供一定程度的可用性,在实际环境中当某个节点宕机或者不可达的情况下继续处理命令. Redis 集群的优势:自动分割数据到不同的节点">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 9929411,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://vincentblog.cn/Redis-集群搭建.html"/>
+
+
+  <title> Redis 集群搭建 | Vincent Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?e78a7a36dc0c97807b01e08b672686f4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="http://s95.cnzz.com/z_stat.php?id=1260196456&web_id=1260196456" language="JavaScript"></script>
+  </div>
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Vincent Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Redis 集群搭建
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-05-21T17:36:16+08:00" content="2017-05-21">
+              2017-05-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Redis集群介绍"><a href="#Redis集群介绍" class="headerlink" title="Redis集群介绍"></a>Redis集群介绍</h1><blockquote>
+<p>Redis 集群是一个提供在多个Redis间节点间共享数据的程序集。<br>Redis集群并不支持处理多个keys的命令,因为这需要在不同的节点间移动数据,从而达不到像Redis那样的性能,在高负载的情况下可能会导致不可预料的错误.<br>Redis 集群通过分区来提供一定程度的可用性,在实际环境中当某个节点宕机或者不可达的情况下继续处理命令. Redis 集群的优势:<br>自动分割数据到不同的节点上。<br>整个集群的部分节点失败或者不可达的情况下能够继续处理命令。</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="Redis-集群的数据分片"><a href="#Redis-集群的数据分片" class="headerlink" title="Redis 集群的数据分片"></a>Redis 集群的数据分片</h1><blockquote>
+<p>Redis 集群没有使用一致性hash, 而是引入了 哈希槽的概念.<br>Redis 集群有16384个哈希槽,每个key通过CRC16校验后对16384取模来决定放置哪个槽.集群的每个节点负责一部分hash槽,举个例子,比如当前集群有3个节点,那么:<br>节点 A 包含 0 到 5500号哈希槽.<br>节点 B 包含5501 到 11000 号哈希槽.<br>节点 C 包含11001 到 16384号哈希槽.<br>这种结构很容易添加或者删除节点. 比如如果我想新添加个节点D, 我需要从节点 A, B, C中得部分槽到D上. 如果我像移除节点A,需要将A中得槽移到B和C节点上,然后将没有任何槽的A节点从集群中移除即可. 由于从一个节点将哈希槽移动到另一个节点并不会停止服务,所以无论添加删除或者改变某个节点的哈希槽的数量都不会造成集群不可用的状态.</p>
+</blockquote>
+<h1 id="Redis-集群的主从复制模型"><a href="#Redis-集群的主从复制模型" class="headerlink" title="Redis 集群的主从复制模型"></a>Redis 集群的主从复制模型</h1><blockquote>
+<p>为了使在部分节点失败或者大部分节点无法通信的情况下集群仍然可用，所以集群使用了主从复制模型,每个节点都会有N-1个复制品.<br>在我们例子中具有A，B，C三个节点的集群,在没有复制模型的情况下,如果节点B失败了，那么整个集群就会以为缺少5501-11000这个范围的槽而不可用.<br>然而如果在集群创建的时候（或者过一段时间）我们为每个节点添加一个从节点A1，B1，C1,那么整个集群便有三个master节点和三个slave节点组成，这样在节点B失败后，集群便会选举B1为新的主节点继续服务，整个集群便不会因为槽找不到而不可用了<br>不过当B和B1 都失败后，集群是不可用的.</p>
+</blockquote>
+<h1 id="Redis-一致性保证"><a href="#Redis-一致性保证" class="headerlink" title="Redis 一致性保证"></a>Redis 一致性保证</h1><blockquote>
+<p>Redis 并不能保证数据的强一致性. 这意味这在实际中集群在特定的条件下可能会丢失写操作.<br>第一个原因是因为集群是用了异步复制. 写操作过程:<br>客户端向主节点B写入一条命令.<br>主节点B向客户端回复命令状态.<br>主节点将写操作复制给他得从节点 B1, B2 和 B3.<br>主节点对命令的复制工作发生在返回命令回复之后， 因为如果每次处理命令请求都需要等待复制操作完成的话， 那么主节点处理命令请求的速度将极大地降低 —— 我们必须在性能和一致性之间做出权衡。 注意：Redis 集群可能会在将来提供同步写的方法。 Redis 集群另外一种可能会丢失命令的情况是集群出现了网络分区， 并且一个客户端与至少包括一个主节点在内的少数实例被孤立。<br>举个例子 假设集群包含 A 、 B 、 C 、 A1 、 B1 、 C1 六个节点， 其中 A 、B 、C 为主节点， A1 、B1 、C1 为A，B，C的从节点， 还有一个客户端 Z1 假设集群中发生网络分区，那么集群可能会分为两方，大部分的一方包含节点 A 、C 、A1 、B1 和 C1 ，小部分的一方则包含节点 B 和客户端 Z1 .<br>Z1仍然能够向主节点B中写入, 如果网络分区发生时间较短,那么集群将会继续正常运作,如果分区的时间足够让大部分的一方将B1选举为新的master，那么Z1写入B中得数据便丢失了.<br>注意， 在网络分裂出现期间， 客户端 Z1 可以向主节点 B 发送写命令的最大时间是有限制的， 这一时间限制称为节点超时时间（node timeout）， 是 Redis 集群的一个重要的配置选项：</p>
+</blockquote>
+<h1 id="Redis安装"><a href="#Redis安装" class="headerlink" title="Redis安装"></a>Redis安装</h1><p>这里在本机安装6个redis-server，分别监听6379，6380，6381，6382，6383，6384端口。</p>
+<p>这里我们只需要修改一下默认6379端口它的配置，使之支持集群模式</p>
+<p>redis安装略</p>
+<h1 id="集群配置"><a href="#集群配置" class="headerlink" title="集群配置"></a>集群配置</h1><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/redis/redis_6379</span><br><span class="line">...</span><br><span class="line"><span class="keyword">cluster</span>-enabled yes</span><br><span class="line"><span class="keyword">cluster</span>-config-<span class="keyword">file</span> nodes.<span class="keyword">conf</span></span><br><span class="line"><span class="keyword">cluster</span>-node-timeout 5000</span><br><span class="line">appendonly yes</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<h2 id="复制相关配置文件"><a href="#复制相关配置文件" class="headerlink" title="复制相关配置文件"></a>复制相关配置文件</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">cd /etc/redis/</span><br><span class="line">cp <span class="number">6379</span><span class="selector-class">.conf</span> <span class="number">6380</span>.conf</span><br><span class="line">cp <span class="number">6379</span><span class="selector-class">.conf</span> <span class="number">6381</span>.conf</span><br><span class="line">cp <span class="number">6379</span><span class="selector-class">.conf</span> <span class="number">6382</span>.conf</span><br><span class="line">cp <span class="number">6379</span><span class="selector-class">.conf</span> <span class="number">6383</span>.conf</span><br><span class="line">cp <span class="number">6379</span><span class="selector-class">.conf</span> <span class="number">6384</span>.conf</span><br><span class="line">cd /etc/init.d/</span><br><span class="line">cp redis_6379<span class="selector-class">.conf</span> redis_6380.conf</span><br><span class="line">cp redis_6379<span class="selector-class">.conf</span> redis_6381.conf</span><br><span class="line">cp redis_6379<span class="selector-class">.conf</span> redis_6382.conf</span><br><span class="line">cp redis_6379<span class="selector-class">.conf</span> redis_6383.conf</span><br><span class="line">cp redis_6379<span class="selector-class">.conf</span> redis_6384.conf</span><br></pre></td></tr></table></figure>
+<h2 id="修改监听端口"><a href="#修改监听端口" class="headerlink" title="修改监听端口"></a>修改监听端口</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">cd /etc/redis/</span><br><span class="line">sed -<span class="selector-tag">i</span> <span class="string">'s/6379/6380/g'</span> <span class="number">6380</span>.conf</span><br><span class="line">sed -<span class="selector-tag">i</span> <span class="string">'s/6379/6381/g'</span> <span class="number">6381</span>.conf</span><br><span class="line">sed -<span class="selector-tag">i</span> <span class="string">'s/6379/6382/g'</span> <span class="number">6382</span>.conf</span><br><span class="line">sed -<span class="selector-tag">i</span> <span class="string">'s/6379/6383/g'</span> <span class="number">6383</span>.conf</span><br><span class="line">sed -<span class="selector-tag">i</span> <span class="string">'s/6379/6384/g'</span> <span class="number">6384</span>.conf</span><br><span class="line">cd /etc/init.d/</span><br><span class="line">sed -<span class="selector-tag">i</span> <span class="string">'s/6379/6380/g'</span> redis_6380.conf</span><br><span class="line">sed -<span class="selector-tag">i</span> <span class="string">'s/6379/6381/g'</span> redis_6381.conf</span><br><span class="line">sed -<span class="selector-tag">i</span> <span class="string">'s/6379/6382/g'</span> redis_6382.conf</span><br><span class="line">sed -<span class="selector-tag">i</span> <span class="string">'s/6379/6383/g'</span> redis_6383.conf</span><br><span class="line">sed -<span class="selector-tag">i</span> <span class="string">'s/6379/6384/g'</span> redis_6384.conf</span><br></pre></td></tr></table></figure>
+<h2 id="启动redis-server"><a href="#启动redis-server" class="headerlink" title="启动redis-server"></a>启动redis-server</h2><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/redis_6379 <span class="literal">start</span></span><br><span class="line">/etc/init.d/redis_6380 <span class="literal">start</span></span><br><span class="line">/etc/init.d/redis_6381 <span class="literal">start</span></span><br><span class="line">/etc/init.d/redis_6382 <span class="literal">start</span></span><br><span class="line">/etc/init.d/redis_6383 <span class="literal">start</span></span><br><span class="line">/etc/init.d/redis_6384 <span class="literal">start</span></span><br></pre></td></tr></table></figure>
+<h2 id="查看是否正常启动"><a href="#查看是否正常启动" class="headerlink" title="查看是否正常启动"></a>查看是否正常启动</h2><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">netstat -ntlp | grep redis</span><br><span class="line">tcp        <span class="number">0</span>      <span class="number">0</span> <span class="number">0.0</span><span class="meta">.0</span><span class="meta">.0</span>:<span class="number">6379</span>                <span class="number">0.0</span><span class="meta">.0</span><span class="meta">.0</span>:*                   LISTEN      <span class="number">8238</span>/redis-server <span class="number">0</span></span><br><span class="line">tcp        <span class="number">0</span>      <span class="number">0</span> <span class="number">0.0</span><span class="meta">.0</span><span class="meta">.0</span>:<span class="number">6380</span>                <span class="number">0.0</span><span class="meta">.0</span><span class="meta">.0</span>:*                   LISTEN      <span class="number">8248</span>/redis-server <span class="number">0</span></span><br><span class="line">tcp        <span class="number">0</span>      <span class="number">0</span> <span class="number">0.0</span><span class="meta">.0</span><span class="meta">.0</span>:<span class="number">6381</span>                <span class="number">0.0</span><span class="meta">.0</span><span class="meta">.0</span>:*                   LISTEN      <span class="number">8257</span>/redis-server <span class="number">0</span></span><br><span class="line">tcp        <span class="number">0</span>      <span class="number">0</span> <span class="number">0.0</span><span class="meta">.0</span><span class="meta">.0</span>:<span class="number">6382</span>                <span class="number">0.0</span><span class="meta">.0</span><span class="meta">.0</span>:*                   LISTEN      <span class="number">8266</span>/redis-server <span class="number">0</span></span><br><span class="line">tcp        <span class="number">0</span>      <span class="number">0</span> <span class="number">0.0</span><span class="meta">.0</span><span class="meta">.0</span>:<span class="number">6383</span>                <span class="number">0.0</span><span class="meta">.0</span><span class="meta">.0</span>:*                   LISTEN      <span class="number">8275</span>/redis-server <span class="number">0</span></span><br><span class="line">tcp        <span class="number">0</span>      <span class="number">0</span> <span class="number">0.0</span><span class="meta">.0</span><span class="meta">.0</span>:<span class="number">6384</span>                <span class="number">0.0</span><span class="meta">.0</span><span class="meta">.0</span>:*                   LISTEN      <span class="number">8284</span>/redis-server <span class="number">0</span></span><br><span class="line">tcp        <span class="number">0</span>      <span class="number">0</span> <span class="number">0.0</span><span class="meta">.0</span><span class="meta">.0</span>:<span class="number">16379</span>               <span class="number">0.0</span><span class="meta">.0</span><span class="meta">.0</span>:*                   LISTEN      <span class="number">8238</span>/redis-server <span class="number">0</span></span><br><span class="line">tcp        <span class="number">0</span>      <span class="number">0</span> <span class="number">0.0</span><span class="meta">.0</span><span class="meta">.0</span>:<span class="number">16380</span>               <span class="number">0.0</span><span class="meta">.0</span><span class="meta">.0</span>:*                   LISTEN      <span class="number">8248</span>/redis-server <span class="number">0</span></span><br><span class="line">tcp        <span class="number">0</span>      <span class="number">0</span> <span class="number">0.0</span><span class="meta">.0</span><span class="meta">.0</span>:<span class="number">16381</span>               <span class="number">0.0</span><span class="meta">.0</span><span class="meta">.0</span>:*                   LISTEN      <span class="number">8257</span>/redis-server <span class="number">0</span></span><br><span class="line">tcp        <span class="number">0</span>      <span class="number">0</span> <span class="number">0.0</span><span class="meta">.0</span><span class="meta">.0</span>:<span class="number">16382</span>               <span class="number">0.0</span><span class="meta">.0</span><span class="meta">.0</span>:*                   LISTEN      <span class="number">8266</span>/redis-server <span class="number">0</span></span><br><span class="line">tcp        <span class="number">0</span>      <span class="number">0</span> <span class="number">0.0</span><span class="meta">.0</span><span class="meta">.0</span>:<span class="number">16383</span>               <span class="number">0.0</span><span class="meta">.0</span><span class="meta">.0</span>:*                   LISTEN      <span class="number">8275</span>/redis-server <span class="number">0</span></span><br><span class="line">tcp        <span class="number">0</span>      <span class="number">0</span> <span class="number">0.0</span><span class="meta">.0</span><span class="meta">.0</span>:<span class="number">16384</span>               <span class="number">0.0</span><span class="meta">.0</span><span class="meta">.0</span>:*                   LISTEN      <span class="number">8284</span>/redis-server <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>文件中的 cluster-enabled 选项用于开实例的集群模式， 而 cluster-conf-file 选项则设定了保存节点配置文件的路径， 默认值为 nodes.conf.节点配置文件无须人为修改， 它由 Redis 集群在启动时创建， 并在有需要时自动进行更新。<br>要让集群正常运作至少需要三个主节点，不过在刚开始试用集群功能时， 强烈建议使用六个节点： 其中三个为主节点， 而其余三个则是各个主节点的从节点。</p>
+</blockquote>
+<h2 id="创建集群"><a href="#创建集群" class="headerlink" title="创建集群"></a>创建集群</h2><blockquote>
+<p>现在我们已经有了六个正在运行中的 Redis 实例， 接下来我们需要使用这些实例来创建集群， 并为每个节点编写配置文件。<br>通过使用 Redis 集群命令行工具 redis-trib ， 编写节点配置文件的工作可以非常容易地完成： redis-trib 位于 Redis 源码的 src 文件夹中， 它是一个 Ruby 程序， 这个程序通过向实例发送特殊命令来完成创建新集群， 检查集群， 或者对集群进行重新分片（reshared）等工作。</p>
+</blockquote>
+<p>创建集群的脚本依赖于ruby所以要先安装ruby,具体安装方法参考这里  <a href="https://github.com/postmodern/ruby-install" target="_blank" rel="noopener">https://github.com/postmodern/ruby-install</a></p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/redis-<span class="number">3.2</span>.<span class="number">9</span>/src/</span><br><span class="line">./redis-trib.rb create --replicas <span class="number">1</span> <span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">6379</span> <span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">6380</span> \</span><br><span class="line"><span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">6381</span> <span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">6382</span> <span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">6383</span> <span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">6384</span></span><br><span class="line">/opt/rubies/ruby-<span class="number">2.4</span>.<span class="number">1</span>/lib/ruby/<span class="number">2.4</span>.<span class="number">0</span>/rubygems/core_ext/kernel_require.rb:<span class="number">55</span>:in `require': cannot load such file -- redis (LoadError)</span><br><span class="line">	from /opt/rubies/ruby-2.4.1/lib/ruby/2.4.0/rubygems/core_ext/kernel_require.rb:55:in `require'</span><br><span class="line">	from ./redis-trib.rb:<span class="number">25</span>:in `&lt;main&gt;'`</span><br><span class="line"># Ruby的redis接口没有安装</span><br><span class="line">gem install redis</span><br><span class="line"></span><br><span class="line"># 再次尝试创建集群</span><br><span class="line">./redis-trib.rb create --replicas 1 127.0.0.1:<span class="number">6379</span> 127.0.0.1:<span class="number">6380</span> 127.0.0.1:<span class="number">6381</span> 127.0.0.1:<span class="number">6382</span> 127.0.0.1:<span class="number">6383</span> 127.0.0.1:<span class="number">6384</span></span><br><span class="line">&gt;&gt;&gt; Creating cluster</span><br><span class="line">&gt;&gt;&gt; Performing hash slots allocation on 6 nodes...</span><br><span class="line">Using 3 masters:</span><br><span class="line">127.0.0.1:<span class="number">6379</span></span><br><span class="line">127.0.0.1:<span class="number">6380</span></span><br><span class="line">127.0.0.1:<span class="number">6381</span></span><br><span class="line">Adding replica 127.0.0.1:<span class="number">6382</span> to 127.0.0.1:<span class="number">6379</span></span><br><span class="line">Adding replica 127.0.0.1:<span class="number">6383</span> to 127.0.0.1:<span class="number">6380</span></span><br><span class="line">Adding replica 127.0.0.1:<span class="number">6384</span> to 127.0.0.1:<span class="number">6381</span></span><br><span class="line">M: 734a40d9b0d08ed8ac1b9c<span class="number">9115</span>7c776b<span class="number">5532</span>bd69 127.0.0.1:<span class="number">6379</span></span><br><span class="line">   slots:0-<span class="number">5460</span> (<span class="number">5461</span> slots) master</span><br><span class="line">M: 6a2e8ec1a6e1e149e5e<span class="number">1898</span>0a5c539db9d2a75a5 127.0.0.1:<span class="number">6380</span></span><br><span class="line">   slots:<span class="number">5461-1092</span>2 (<span class="number">5462</span> slots) master</span><br><span class="line">M: 87f48e91ca3ea67ecc5e16a68d451b3a<span class="number">4075</span>2cfe 127.0.0.1:<span class="number">6381</span></span><br><span class="line">   slots:<span class="number">1092</span>3-<span class="number">1638</span>3 (<span class="number">5461</span> slots) master</span><br><span class="line">S: fe<span class="number">321040</span>d7f1bf31e6e39a2f9cf135b2ea<span class="number">6781</span>1d 127.0.0.1:<span class="number">6382</span></span><br><span class="line">   replicates 734a40d9b0d08ed8ac1b9c<span class="number">9115</span>7c776b<span class="number">5532</span>bd69</span><br><span class="line">S: f07a2c<span class="number">551126</span>fb308c9e5bdd<span class="number">991883</span>b<span class="number">5023</span>b2de1 127.0.0.1:<span class="number">6383</span></span><br><span class="line">   replicates 6a2e8ec1a6e1e149e5e<span class="number">1898</span>0a5c539db9d2a75a5</span><br><span class="line">S: 8c1eeceb<span class="number">9487</span>1b<span class="number">1672</span>e<span class="number">1843</span>2aa16f30a43f73ff2 127.0.0.1:<span class="number">6384</span></span><br><span class="line">   replicates 87f48e91ca3ea67ecc5e16a68d451b3a<span class="number">4075</span>2cfe</span><br><span class="line">Can I set the above configuration? (type 'yes' to accept): yes</span><br><span class="line">&gt;&gt;&gt; Nodes configuration updated</span><br><span class="line">&gt;&gt;&gt; Assign a different config epoch to each node</span><br><span class="line">&gt;&gt;&gt; Sending CLUSTER MEET messages to join the cluster</span><br><span class="line">Waiting for the cluster to join....</span><br><span class="line">&gt;&gt;&gt; Performing Cluster Check (using node 127.0.0.1:<span class="number">6379</span>)</span><br><span class="line">M: 734a40d9b0d08ed8ac1b9c<span class="number">9115</span>7c776b<span class="number">5532</span>bd69 127.0.0.1:<span class="number">6379</span></span><br><span class="line">   slots:0-<span class="number">5460</span> (<span class="number">5461</span> slots) master</span><br><span class="line">   1 additional replica(s)</span><br><span class="line">M: 87f48e91ca3ea67ecc5e16a68d451b3a<span class="number">4075</span>2cfe 127.0.0.1:<span class="number">6381</span></span><br><span class="line">   slots:<span class="number">1092</span>3-<span class="number">1638</span>3 (<span class="number">5461</span> slots) master</span><br><span class="line">   1 additional replica(s)</span><br><span class="line">M: 6a2e8ec1a6e1e149e5e<span class="number">1898</span>0a5c539db9d2a75a5 127.0.0.1:<span class="number">6380</span></span><br><span class="line">   slots:<span class="number">5461-1092</span>2 (<span class="number">5462</span> slots) master</span><br><span class="line">   1 additional replica(s)</span><br><span class="line">S: fe<span class="number">321040</span>d7f1bf31e6e39a2f9cf135b2ea<span class="number">6781</span>1d 127.0.0.1:<span class="number">6382</span></span><br><span class="line">   slots: (0 slots) slave</span><br><span class="line">   replicates 734a40d9b0d08ed8ac1b9c<span class="number">9115</span>7c776b<span class="number">5532</span>bd69</span><br><span class="line">S: 8c1eeceb<span class="number">9487</span>1b<span class="number">1672</span>e<span class="number">1843</span>2aa16f30a43f73ff2 127.0.0.1:<span class="number">6384</span></span><br><span class="line">   slots: (0 slots) slave</span><br><span class="line">   replicates 87f48e91ca3ea67ecc5e16a68d451b3a<span class="number">4075</span>2cfe</span><br><span class="line">S: f07a2c<span class="number">551126</span>fb308c9e5bdd<span class="number">991883</span>b<span class="number">5023</span>b2de1 127.0.0.1:<span class="number">6383</span></span><br><span class="line">   slots: (0 slots) slave</span><br><span class="line">   replicates 6a2e8ec1a6e1e149e5e<span class="number">1898</span>0a5c539db9d2a75a5</span><br><span class="line">[OK] All nodes agree about slots configuration.</span><br><span class="line">&gt;&gt;&gt; Check for open slots...</span><br><span class="line">&gt;&gt;&gt; Check slots coverage...</span><br><span class="line">[OK] All <span class="number">1638</span>4 slots covered.</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这个命令在这里用于创建一个新的集群, 选项–replicas 1 表示我们希望为集群中的每个主节点创建一个从节点。<br>之后跟着的其他参数则是这个集群实例的地址列表,3个master3个slave redis-trib 会打印出一份预想中的配置给你看， 如果你觉得没问题的话， 就可以输入 yes ， redis-trib 就会将这份配置应用到集群当中,让各个节点开始互相通讯,最后可以得到如下信息：</p>
+</blockquote>
+<h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><h2 id="查看集群状态"><a href="#查看集群状态" class="headerlink" title="查看集群状态"></a>查看集群状态</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">redis-cli</span> <span class="selector-tag">-c</span> <span class="selector-tag">-p</span> 6379</span><br><span class="line">127<span class="selector-class">.0</span><span class="selector-class">.0</span><span class="selector-class">.1</span><span class="selector-pseudo">:6379</span>&gt; <span class="selector-tag">CLUSTER</span> <span class="selector-tag">info</span></span><br><span class="line"><span class="selector-tag">cluster_state</span><span class="selector-pseudo">:ok</span></span><br><span class="line"><span class="selector-tag">cluster_slots_assigned</span><span class="selector-pseudo">:16384</span></span><br><span class="line"><span class="selector-tag">cluster_slots_ok</span><span class="selector-pseudo">:16384</span></span><br><span class="line"><span class="selector-tag">cluster_slots_pfail</span><span class="selector-pseudo">:0</span></span><br><span class="line"><span class="selector-tag">cluster_slots_fail</span><span class="selector-pseudo">:0</span></span><br><span class="line"><span class="selector-tag">cluster_known_nodes</span><span class="selector-pseudo">:6</span></span><br><span class="line"><span class="selector-tag">cluster_size</span><span class="selector-pseudo">:3</span></span><br><span class="line"><span class="selector-tag">cluster_current_epoch</span><span class="selector-pseudo">:6</span></span><br><span class="line"><span class="selector-tag">cluster_my_epoch</span><span class="selector-pseudo">:1</span></span><br><span class="line"><span class="selector-tag">cluster_stats_messages_sent</span><span class="selector-pseudo">:192</span></span><br><span class="line"><span class="selector-tag">cluster_stats_messages_received</span><span class="selector-pseudo">:192</span></span><br></pre></td></tr></table></figure>
+<h2 id="测试存储取值"><a href="#测试存储取值" class="headerlink" title="测试存储取值"></a>测试存储取值</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">127<span class="selector-class">.0</span><span class="selector-class">.0</span><span class="selector-class">.1</span><span class="selector-pseudo">:6379</span>&gt; <span class="selector-tag">set</span> <span class="selector-tag">foo</span> <span class="selector-tag">bar</span></span><br><span class="line"><span class="selector-tag">-</span>&gt; <span class="selector-tag">Redirected</span> <span class="selector-tag">to</span> <span class="selector-tag">slot</span> <span class="selector-attr">[12182]</span> <span class="selector-tag">located</span> <span class="selector-tag">at</span> 127<span class="selector-class">.0</span><span class="selector-class">.0</span><span class="selector-class">.1</span><span class="selector-pseudo">:6381</span></span><br><span class="line"><span class="selector-tag">OK</span></span><br><span class="line">127<span class="selector-class">.0</span><span class="selector-class">.0</span><span class="selector-class">.1</span><span class="selector-pseudo">:6381</span>&gt; <span class="selector-tag">set</span> <span class="selector-tag">hello</span> <span class="selector-tag">world</span></span><br><span class="line"><span class="selector-tag">-</span>&gt; <span class="selector-tag">Redirected</span> <span class="selector-tag">to</span> <span class="selector-tag">slot</span> <span class="selector-attr">[866]</span> <span class="selector-tag">located</span> <span class="selector-tag">at</span> 127<span class="selector-class">.0</span><span class="selector-class">.0</span><span class="selector-class">.1</span><span class="selector-pseudo">:6379</span></span><br><span class="line"><span class="selector-tag">OK</span></span><br><span class="line">127<span class="selector-class">.0</span><span class="selector-class">.0</span><span class="selector-class">.1</span><span class="selector-pseudo">:6379</span>&gt; <span class="selector-tag">get</span> <span class="selector-tag">foo</span></span><br><span class="line"><span class="selector-tag">-</span>&gt; <span class="selector-tag">Redirected</span> <span class="selector-tag">to</span> <span class="selector-tag">slot</span> <span class="selector-attr">[12182]</span> <span class="selector-tag">located</span> <span class="selector-tag">at</span> 127<span class="selector-class">.0</span><span class="selector-class">.0</span><span class="selector-class">.1</span><span class="selector-pseudo">:6381</span></span><br><span class="line">"<span class="selector-tag">bar</span>"</span><br><span class="line">127<span class="selector-class">.0</span><span class="selector-class">.0</span><span class="selector-class">.1</span><span class="selector-pseudo">:6381</span>&gt; <span class="selector-tag">get</span> <span class="selector-tag">foo</span></span><br><span class="line">"<span class="selector-tag">bar</span>"</span><br><span class="line">127<span class="selector-class">.0</span><span class="selector-class">.0</span><span class="selector-class">.1</span><span class="selector-pseudo">:6381</span>&gt; <span class="selector-tag">get</span> <span class="selector-tag">hello</span></span><br><span class="line"><span class="selector-tag">-</span>&gt; <span class="selector-tag">Redirected</span> <span class="selector-tag">to</span> <span class="selector-tag">slot</span> <span class="selector-attr">[866]</span> <span class="selector-tag">located</span> <span class="selector-tag">at</span> 127<span class="selector-class">.0</span><span class="selector-class">.0</span><span class="selector-class">.1</span><span class="selector-pseudo">:6379</span></span><br><span class="line">"<span class="selector-tag">world</span>"</span><br><span class="line">127<span class="selector-class">.0</span><span class="selector-class">.0</span><span class="selector-class">.1</span><span class="selector-pseudo">:6379</span>&gt; <span class="selector-tag">get</span> <span class="selector-tag">hello</span></span><br><span class="line">"<span class="selector-tag">world</span>"</span><br></pre></td></tr></table></figure>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="http://www.redis.cn/topics/cluster-tutorial.html" target="_blank" rel="noopener">http://www.redis.cn/topics/cluster-tutorial.html</a></p>
+<p><a href="https://www.zybuluo.com/phper/note/195558" target="_blank" rel="noopener">https://www.zybuluo.com/phper/note/195558</a></p>
+<p><a href="http://blog.csdn.net/ownfire/article/details/39395531" target="_blank" rel="noopener">http://blog.csdn.net/ownfire/article/details/39395531</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="uploads/wechatpay.jpg" alt="Vincent WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="uploads/alipay.jpg" alt="Vincent Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/redis/" rel="tag">#redis</a>
+          
+            <a href="/tags/cluster/" rel="tag">#cluster</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/CentOS编译安装redis.html" rel="next" title="CentOS编译安装redis">
+                <i class="fa fa-chevron-left"></i> CentOS编译安装redis
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/自定义Shell终端提示符.html" rel="prev" title="自定义Shell终端提示符">
+                自定义Shell终端提示符 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/vincent.png"
+               alt="Vincent" />
+          <p class="site-author-name" itemprop="name">Vincent</p>
+          <p class="site-description motion-element" itemprop="description">为了无法计算的价值</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">79</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">88</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/vincent927" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/liuhuan19910927" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis集群介绍"><span class="nav-number">1.</span> <span class="nav-text">Redis集群介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis-集群的数据分片"><span class="nav-number">2.</span> <span class="nav-text">Redis 集群的数据分片</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis-集群的主从复制模型"><span class="nav-number">3.</span> <span class="nav-text">Redis 集群的主从复制模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis-一致性保证"><span class="nav-number">4.</span> <span class="nav-text">Redis 一致性保证</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis安装"><span class="nav-number">5.</span> <span class="nav-text">Redis安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#集群配置"><span class="nav-number">6.</span> <span class="nav-text">集群配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#复制相关配置文件"><span class="nav-number">6.1.</span> <span class="nav-text">复制相关配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改监听端口"><span class="nav-number">6.2.</span> <span class="nav-text">修改监听端口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动redis-server"><span class="nav-number">6.3.</span> <span class="nav-text">启动redis-server</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看是否正常启动"><span class="nav-number">6.4.</span> <span class="nav-text">查看是否正常启动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建集群"><span class="nav-number">6.5.</span> <span class="nav-text">创建集群</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#测试"><span class="nav-number">7.</span> <span class="nav-text">测试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查看集群状态"><span class="nav-number">7.1.</span> <span class="nav-text">查看集群状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试存储取值"><span class="nav-number">7.2.</span> <span class="nav-text">测试存储取值</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">8.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vincent</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Muse
+  </a>
+</div>
+
+<div>
+<a href="http://www.miitbeian.gov.cn/" rel="external nofollow">粤ICP备16107811号</a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

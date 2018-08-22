@@ -1,0 +1,682 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="baidu-site-verification" content="LJgfOWhkKl" />
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="centos7," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Centos7最小化安装之后还有很多常用的命令没有，这里我们通过脚本一键安装配置基础的环境">
+<meta name="keywords" content="centos7">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Centos7最小化安装之后的初始化脚本">
+<meta property="og:url" content="http://vincentblog.cn/Centos7最小化安装之后的初始化脚本.html">
+<meta property="og:site_name" content="Vincent Blog">
+<meta property="og:description" content="Centos7最小化安装之后还有很多常用的命令没有，这里我们通过脚本一键安装配置基础的环境">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-08-22T01:39:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Centos7最小化安装之后的初始化脚本">
+<meta name="twitter:description" content="Centos7最小化安装之后还有很多常用的命令没有，这里我们通过脚本一键安装配置基础的环境">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 9929411,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://vincentblog.cn/Centos7最小化安装之后的初始化脚本.html"/>
+
+
+  <title> Centos7最小化安装之后的初始化脚本 | Vincent Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?e78a7a36dc0c97807b01e08b672686f4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="http://s95.cnzz.com/z_stat.php?id=1260196456&web_id=1260196456" language="JavaScript"></script>
+  </div>
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Vincent Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Centos7最小化安装之后的初始化脚本
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-12-30T19:11:30+08:00" content="2016-12-30">
+              2016-12-30
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Centos7最小化安装之后还有很多常用的命令没有，这里我们通过脚本一键安装配置基础的环境</p>
+<a id="more"></a>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/bin/bash</span></span><br><span class="line"><span class="comment">#阿里Yum源</span></span><br><span class="line">epel <span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">yum -y install wget</span><br><span class="line"><span class="keyword">cd</span> <span class="string">/etc/yum.repos.d/</span></span><br><span class="line">mkdir bak</span><br><span class="line">mv <span class="string">./</span>*<span class="string">.repo</span> bak</span><br><span class="line">wget -O <span class="string">/etc/yum.repos.d/CentOS-Base.repo</span> http:<span class="string">//mirrors.aliyun.com/repo/Centos-7.repo</span></span><br><span class="line">wget -O <span class="string">/etc/yum.repos.d/epel.repo</span> http:<span class="string">//mirrors.aliyun.com/repo/epel-7.repo</span></span><br><span class="line">yum clean all &amp;&amp; yum makecache</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">#基本组件安装</span></span><br><span class="line">base_install <span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">yum install net-tools lrzsz gcc gcc-c++ make cmake libxml2-devel openssl-devel curl curl-devel unzip sudo ntp libaio-devel wget vim ncurses-devel autoconf automake zlib-devel  python-devel python-pip iftop ntp iotop lsof python-pip vim telnet  -y</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#开启包转发</span></span><br><span class="line">ip_forward <span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"1"</span> &gt; <span class="string">/proc/sys/net/ipv4/ip_forward</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">"net.ipv4.ip_forward = 1"</span>  &gt;&gt; <span class="string">/usr/lib/sysctl.d/00-system.conf</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#selinux</span></span><br><span class="line">selinux <span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">setenforce 0</span><br><span class="line">sed -i  <span class="string">"s/enforcing/disabled/"</span> <span class="string">/etc/sysconfig/selinux</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#ssh服务安全配置</span></span><br><span class="line">sshd <span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">tee -a  <span class="string">/etc/ssh/sshd_config</span> &lt;&lt; EOF</span><br><span class="line">Port 62002 <span class="comment">#修改默认ssh端口</span></span><br><span class="line">PermitRootLogin no  <span class="comment">#拒绝root用户远程登录</span></span><br><span class="line">PermitEmptyPasswords no <span class="comment">#拒绝空密码登录</span></span><br><span class="line">UseDNS no <span class="comment">#不适用DNS解析</span></span><br><span class="line">EOF</span><br><span class="line">systemctl restart sshd</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#时间同步</span></span><br><span class="line">ntpdate <span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="string">/usr/sbin/ntpdate</span> pool.ntp.org</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"* */5 * * * /usr/sbin/ntpdate pool.ntp.org &gt; /dev/null 2&gt;&amp;1"</span> &gt;&gt; <span class="string">/var/spool/cron/root</span>;chmod 600 <span class="string">/var/spool/cron/root</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ulimit <span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="comment">#最大文件描述符</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">"ulimit -SHn 102400"</span> &gt;&gt; <span class="string">/etc/rc.local</span></span><br><span class="line">cat &gt;&gt; <span class="string">/etc/security/limits.conf</span> &lt;&lt; EOF</span><br><span class="line"> *           soft   nofile       102400</span><br><span class="line"> *           hard   nofile       102400</span><br><span class="line"> *           soft   nproc        102400</span><br><span class="line"> *           hard   nproc        102400</span><br><span class="line">EOF</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#内核参数优化</span></span><br><span class="line">kernel <span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">cp <span class="string">/etc/sysctl.conf</span> <span class="string">/et/sysctl.conf.bak</span></span><br><span class="line">cat &gt; <span class="string">/etc/sysctl.conf</span> &lt;&lt; EOF</span><br><span class="line"> net.ipv4.ip_forward = 0</span><br><span class="line"> net.ipv4.conf.default.rp_filter = 1</span><br><span class="line"> net.ipv4.conf.default.accept_source_route = 0</span><br><span class="line"> kernel.sysrq = 0</span><br><span class="line"> kernel.core_uses_pid = 1</span><br><span class="line"> net.ipv4.tcp_syncookies = 1</span><br><span class="line"> kernel.msgmnb = 65536</span><br><span class="line"> kernel.msgmax = 65536</span><br><span class="line"> kernel.shmmax = 68719476736</span><br><span class="line"> kernel.shmall = 4294967296</span><br><span class="line"> net.ipv4.tcp_max_tw_buckets = 6000</span><br><span class="line"> net.ipv4.tcp_sack = 1</span><br><span class="line"> net.ipv4.tcp_window_scaling = 1</span><br><span class="line"> net.ipv4.tcp_rmem = 4096 87380 4194304</span><br><span class="line"> net.ipv4.tcp_wmem = 4096 16384 4194304</span><br><span class="line"> net.core.wmem_default = 8388608</span><br><span class="line"> net.core.rmem_default = 8388608</span><br><span class="line"> net.core.rmem_max = 16777216</span><br><span class="line"> net.core.wmem_max = 16777216</span><br><span class="line"> net.core.netdev_max_backlog = 262144</span><br><span class="line"> net.core.somaxconn = 262144</span><br><span class="line"> net.ipv4.tcp_max_orphans = 3276800</span><br><span class="line"> net.ipv4.tcp_max_syn_backlog = 262144</span><br><span class="line"> net.ipv4.tcp_timestamps = 0</span><br><span class="line"> net.ipv4.tcp_synack_retries = 1</span><br><span class="line"> net.ipv4.tcp_syn_retries = 1</span><br><span class="line"> net.ipv4.tcp_tw_recycle = 1</span><br><span class="line"> net.ipv4.tcp_tw_reuse = 1</span><br><span class="line"> net.ipv4.tcp_mem = 94500000 915000000 927000000</span><br><span class="line"> net.ipv4.tcp_fin_timeout = 1</span><br><span class="line"> net.ipv4.tcp_keepalive_time = 1200</span><br><span class="line"> net.ipv4.ip_local_port_range = 1024 65535</span><br><span class="line">EOF</span><br><span class="line"><span class="string">/sbin/sysctl</span> -p</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#防火墙</span></span><br><span class="line">iptables <span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">yum install iptables-services -y</span><br><span class="line">cat &gt; <span class="string">/etc/sysconfig/iptables</span> &lt;&lt; EOF</span><br><span class="line"><span class="comment"># Firewall configuration written by system-config-securitylevel</span></span><br><span class="line"><span class="comment"># Manual customization of this file is not recommended.</span></span><br><span class="line">*filter</span><br><span class="line"><span class="function">:INPUT</span> DROP [0<span class="function">:0</span>]</span><br><span class="line"><span class="function">:FORWARD</span> ACCEPT [0<span class="function">:0</span>]</span><br><span class="line"><span class="function">:OUTPUT</span> ACCEPT [0<span class="function">:0</span>]</span><br><span class="line"><span class="function">:syn-flood</span> - [0<span class="function">:0</span>]</span><br><span class="line">-A INPUT -i lo -j ACCEPT</span><br><span class="line">-A INPUT -m state <span class="params">--state</span> RELATED,ESTABLISHED -j ACCEPT</span><br><span class="line">-A INPUT -p tcp -m state <span class="params">--state</span> NEW -m tcp <span class="params">--dport</span> 62002 -j ACCEPT</span><br><span class="line"><span class="comment">#-A INPUT -p icmp -m limit --limit 100/sec --limit-burst 100 -j ACCEPT</span></span><br><span class="line"><span class="comment">#-A INPUT -p icmp -m limit --limit 1/s --limit-burst 10 -j ACCEPT</span></span><br><span class="line"><span class="comment">#-A INPUT -p tcp -m tcp --tcp-flags FIN,SYN,RST,ACK SYN -j syn-flood</span></span><br><span class="line"><span class="comment">#-A INPUT -j REJECT --reject-with icmp-host-prohibited</span></span><br><span class="line"><span class="comment">#-A syn-flood -p tcp -m limit --limit 3/sec --limit-burst 6 -j RETURN</span></span><br><span class="line">-A syn-flood -j REJECT <span class="params">--reject-with</span> icmp-port-unreachable</span><br><span class="line">COMMIT</span><br><span class="line">EOF</span><br><span class="line"><span class="string">/sbin/service</span> iptables restart</span><br><span class="line">systemctl enable iptables</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#pip源</span></span><br><span class="line">pip <span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">if</span> [ ! -d ~<span class="string">/.pip</span> ]</span><br><span class="line">then</span><br><span class="line">mkdir ~<span class="string">/.pip</span></span><br><span class="line">fi</span><br><span class="line"><span class="keyword">if</span> [ ! -f ~<span class="string">/.pip/pip.conf</span> ]</span><br><span class="line">then</span><br><span class="line">tee ~<span class="string">/.pip/pip.conf</span> &lt; EOF</span><br><span class="line">[global]</span><br><span class="line">index-url = http:<span class="string">//mirrors.aliyun.com/pypi/simple/</span></span><br><span class="line"></span><br><span class="line">[install]</span><br><span class="line">trusted-host=mirrors.aliyun.com</span><br><span class="line">EOF</span><br><span class="line">pip install <span class="params">--upgrade</span> pip</span><br><span class="line">fi</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">epel</span><br><span class="line">base_install</span><br><span class="line">ip_forward</span><br><span class="line">selinux</span><br><span class="line">sshd</span><br><span class="line">ntpdate</span><br><span class="line">ulimit</span><br><span class="line">kernel</span><br><span class="line">iptables</span><br><span class="line">pip</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="uploads/wechatpay.jpg" alt="Vincent WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="uploads/alipay.jpg" alt="Vincent Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/centos7/" rel="tag">#centos7</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/mysqlbinlog查看方法.html" rel="next" title="mysqlbinlog查看方法">
+                <i class="fa fa-chevron-left"></i> mysqlbinlog查看方法
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Mac-使用L2TP协议VPN正常连接后无法访问内网.html" rel="prev" title="Mac 使用L2TP协议VPN正常连接后无法访问内网">
+                Mac 使用L2TP协议VPN正常连接后无法访问内网 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/vincent.png"
+               alt="Vincent" />
+          <p class="site-author-name" itemprop="name">Vincent</p>
+          <p class="site-description motion-element" itemprop="description">为了无法计算的价值</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">79</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">88</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/vincent927" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/liuhuan19910927" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vincent</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Muse
+  </a>
+</div>
+
+<div>
+<a href="http://www.miitbeian.gov.cn/" rel="external nofollow">粤ICP备16107811号</a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

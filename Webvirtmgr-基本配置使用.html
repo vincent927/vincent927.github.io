@@ -1,0 +1,726 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="baidu-site-verification" content="LJgfOWhkKl" />
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="kvm,webvirtmgr," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="登录管理平台">
+<meta name="keywords" content="kvm,webvirtmgr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Webvirtmgr-基本配置使用">
+<meta property="og:url" content="http://vincentblog.cn/Webvirtmgr-基本配置使用.html">
+<meta property="og:site_name" content="Vincent Blog">
+<meta property="og:description" content="登录管理平台">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/6e9a4d0bgw1fb8nn8ce9vj20s50aydfw.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/6e9a4d0bgw1fb8no1askdj20s70b074e.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/6e9a4d0bgw1fb8npp0w39j20g60bz3yp.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/6e9a4d0bgw1fb8nqg494fj20s60d674g.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/6e9a4d0bgw1fb8nt1ahiqj20u20d3t8y.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/6e9a4d0bgw1fb8ntzgm8fj20g50a73yn.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/6e9a4d0bgw1fb8nwnc1jqj20ss0fnt93.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/6e9a4d0bgw1fb8nxklhszj20g80ai3yl.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/6e9a4d0bgw1fb8ud56umvj20rt0bs0t5.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/6e9a4d0bgw1fb8o2bbb5uj20t10m4q3n.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/6e9a4d0bgw1fb8o3lmq0ij20s70cq74n.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/6e9a4d0bgw1fb8tqdevpsj20se0jpgmf.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/6e9a4d0bgw1fb8u8nj5hzj20rt0bs0t5.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/6e9a4d0bgw1fb8trh4uh5j20s80f30tc.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/6e9a4d0bgw1fb8u3y526tj20rh0eoq3k.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/6e9a4d0bgw1fb8yls75gwj20r30f1jrw.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/6e9a4d0bgw1fb8tskxjl6j20o20fbjsi.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/6e9a4d0bgw1fb8ynjk1e4j20rl0gtjs0.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/6e9a4d0bgw1fb8yohi879j20ra0gbaar.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/6e9a4d0bgw1fb8ze27dx0j20r90lcmxy.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/6e9a4d0bgw1fb8zjecvoyj20re0erdgd.jpg">
+<meta property="og:updated_time" content="2018-08-22T01:39:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Webvirtmgr-基本配置使用">
+<meta name="twitter:description" content="登录管理平台">
+<meta name="twitter:image" content="http://ww4.sinaimg.cn/large/6e9a4d0bgw1fb8nn8ce9vj20s50aydfw.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 9929411,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://vincentblog.cn/Webvirtmgr-基本配置使用.html"/>
+
+
+  <title> Webvirtmgr-基本配置使用 | Vincent Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?e78a7a36dc0c97807b01e08b672686f4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="http://s95.cnzz.com/z_stat.php?id=1260196456&web_id=1260196456" language="JavaScript"></script>
+  </div>
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Vincent Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Webvirtmgr-基本配置使用
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-12-30T16:28:06+08:00" content="2016-12-30">
+              2016-12-30
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/kvm/" itemprop="url" rel="index">
+                    <span itemprop="name">kvm</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="登录管理平台"><a href="#登录管理平台" class="headerlink" title="登录管理平台"></a>登录管理平台</h1><p><img src="http://ww4.sinaimg.cn/large/6e9a4d0bgw1fb8nn8ce9vj20s50aydfw.jpg" alt=""></p>
+<a id="more"></a>
+<h1 id="添加宿主机"><a href="#添加宿主机" class="headerlink" title="添加宿主机"></a>添加宿主机</h1><p><img src="http://ww4.sinaimg.cn/large/6e9a4d0bgw1fb8no1askdj20s70b074e.jpg" alt=""></p>
+<h1 id="TCP-连接"><a href="#TCP-连接" class="headerlink" title="TCP 连接"></a>TCP 连接</h1><p><img src="http://ww2.sinaimg.cn/large/6e9a4d0bgw1fb8npp0w39j20g60bz3yp.jpg" alt=""></p>
+<h1 id="进入宿主机"><a href="#进入宿主机" class="headerlink" title="进入宿主机"></a>进入宿主机</h1><p><img src="http://ww1.sinaimg.cn/large/6e9a4d0bgw1fb8nqg494fj20s60d674g.jpg" alt=""></p>
+<h1 id="添加存储池-目录类型卷"><a href="#添加存储池-目录类型卷" class="headerlink" title="添加存储池-目录类型卷"></a>添加存储池-目录类型卷</h1><p>存储池一定要是宿主机上已经有的目录</p>
+<p><img src="http://ww3.sinaimg.cn/large/6e9a4d0bgw1fb8nt1ahiqj20u20d3t8y.jpg" alt=""><br><img src="http://ww4.sinaimg.cn/large/6e9a4d0bgw1fb8ntzgm8fj20g50a73yn.jpg" alt=""></p>
+<h1 id="添加磁盘镜像"><a href="#添加磁盘镜像" class="headerlink" title="添加磁盘镜像"></a>添加磁盘镜像</h1><p>这里推荐使用qcow2格式的镜像，要把Metadata选项取消掉<br><img src="http://ww1.sinaimg.cn/large/6e9a4d0bgw1fb8nwnc1jqj20ss0fnt93.jpg" alt=""><br><img src="http://ww1.sinaimg.cn/large/6e9a4d0bgw1fb8nxklhszj20g80ai3yl.jpg" alt=""></p>
+<h1 id="添加存储池-ISO镜像卷"><a href="#添加存储池-ISO镜像卷" class="headerlink" title="添加存储池-ISO镜像卷"></a>添加存储池-ISO镜像卷</h1><p>注意这里的目录指的是对应这台宿主机的目录，千万不要弄错。我们使用默认的路径，再此之前应该先创建这个文件夹<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p <span class="regexp">/var/</span>www<span class="regexp">/webvirtmgr/im</span>ages</span><br></pre></td></tr></table></figure></p>
+<p>创建成功后就可以把我们的ISO系统镜像放进去了</p>
+<p><img src="http://ww3.sinaimg.cn/large/6e9a4d0bgw1fb8ud56umvj20rt0bs0t5.jpg" alt=""></p>
+<h1 id="添加网卡"><a href="#添加网卡" class="headerlink" title="添加网卡"></a>添加网卡</h1><p><img src="http://ww4.sinaimg.cn/large/6e9a4d0bgw1fb8o2bbb5uj20t10m4q3n.jpg" alt=""></p>
+<h1 id="创建网络池"><a href="#创建网络池" class="headerlink" title="创建网络池"></a>创建网络池</h1><p><img src="http://ww2.sinaimg.cn/large/6e9a4d0bgw1fb8o3lmq0ij20s70cq74n.jpg" alt=""></p>
+<h1 id="创建虚拟机"><a href="#创建虚拟机" class="headerlink" title="创建虚拟机"></a>创建虚拟机</h1><p>这里我们创建一个自定义的虚拟机<br><img src="http://ww3.sinaimg.cn/large/6e9a4d0bgw1fb8tqdevpsj20se0jpgmf.jpg" alt=""></p>
+<h1 id="设置启动的ISO镜像"><a href="#设置启动的ISO镜像" class="headerlink" title="设置启动的ISO镜像"></a>设置启动的ISO镜像</h1><p><img src="http://ww4.sinaimg.cn/large/6e9a4d0bgw1fb8u8nj5hzj20rt0bs0t5.jpg" alt=""></p>
+<p>连接我们已有的Centos6.5镜像<br><img src="http://ww1.sinaimg.cn/large/6e9a4d0bgw1fb8trh4uh5j20s80f30tc.jpg" alt=""></p>
+<h1 id="进入控制台"><a href="#进入控制台" class="headerlink" title="进入控制台"></a>进入控制台</h1><p><img src="http://ww1.sinaimg.cn/large/6e9a4d0bgw1fb8u3y526tj20rh0eoq3k.jpg" alt=""></p>
+<h1 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h1><p><img src="http://ww1.sinaimg.cn/large/6e9a4d0bgw1fb8yls75gwj20r30f1jrw.jpg" alt=""></p>
+<h1 id="开始安装"><a href="#开始安装" class="headerlink" title="开始安装"></a>开始安装</h1><p><img src="http://ww3.sinaimg.cn/large/6e9a4d0bgw1fb8tskxjl6j20o20fbjsi.jpg" alt=""></p>
+<h1 id="创建快照"><a href="#创建快照" class="headerlink" title="创建快照"></a>创建快照</h1><p>创建快照之前必须关闭虚拟机<br><img src="http://ww4.sinaimg.cn/large/6e9a4d0bgw1fb8ynjk1e4j20rl0gtjs0.jpg" alt=""></p>
+<h1 id="还原快照"><a href="#还原快照" class="headerlink" title="还原快照"></a>还原快照</h1><p><img src="http://ww1.sinaimg.cn/large/6e9a4d0bgw1fb8yohi879j20ra0gbaar.jpg" alt=""></p>
+<h1 id="克隆"><a href="#克隆" class="headerlink" title="克隆"></a>克隆</h1><p><strong>克隆之前记得先Random MAC address,随机生成一个新的MAC地址</strong><br><img src="http://ww2.sinaimg.cn/large/6e9a4d0bgw1fb8ze27dx0j20r90lcmxy.jpg" alt=""></p>
+<p>启动克隆完的虚拟机<br><img src="http://ww3.sinaimg.cn/large/6e9a4d0bgw1fb8zjecvoyj20re0erdgd.jpg" alt=""></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="uploads/wechatpay.jpg" alt="Vincent WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="uploads/alipay.jpg" alt="Vincent Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/kvm/" rel="tag">#kvm</a>
+          
+            <a href="/tags/webvirtmgr/" rel="tag">#webvirtmgr</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Webvirtmgr-Host端安装.html" rel="next" title="Webvirtmgr-Host端安装">
+                <i class="fa fa-chevron-left"></i> Webvirtmgr-Host端安装
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Jenkins-pipline基于Rancher的CI-CD.html" rel="prev" title="Jenkins-pipline基于Rancher的CI/CD">
+                Jenkins-pipline基于Rancher的CI/CD <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/vincent.png"
+               alt="Vincent" />
+          <p class="site-author-name" itemprop="name">Vincent</p>
+          <p class="site-description motion-element" itemprop="description">为了无法计算的价值</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">79</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">88</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/vincent927" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/liuhuan19910927" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#登录管理平台"><span class="nav-number">1.</span> <span class="nav-text">登录管理平台</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#添加宿主机"><span class="nav-number">2.</span> <span class="nav-text">添加宿主机</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP-连接"><span class="nav-number">3.</span> <span class="nav-text">TCP 连接</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进入宿主机"><span class="nav-number">4.</span> <span class="nav-text">进入宿主机</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#添加存储池-目录类型卷"><span class="nav-number">5.</span> <span class="nav-text">添加存储池-目录类型卷</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#添加磁盘镜像"><span class="nav-number">6.</span> <span class="nav-text">添加磁盘镜像</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#添加存储池-ISO镜像卷"><span class="nav-number">7.</span> <span class="nav-text">添加存储池-ISO镜像卷</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#添加网卡"><span class="nav-number">8.</span> <span class="nav-text">添加网卡</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建网络池"><span class="nav-number">9.</span> <span class="nav-text">创建网络池</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建虚拟机"><span class="nav-number">10.</span> <span class="nav-text">创建虚拟机</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设置启动的ISO镜像"><span class="nav-number">11.</span> <span class="nav-text">设置启动的ISO镜像</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进入控制台"><span class="nav-number">12.</span> <span class="nav-text">进入控制台</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#启动"><span class="nav-number">13.</span> <span class="nav-text">启动</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#开始安装"><span class="nav-number">14.</span> <span class="nav-text">开始安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建快照"><span class="nav-number">15.</span> <span class="nav-text">创建快照</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#还原快照"><span class="nav-number">16.</span> <span class="nav-text">还原快照</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#克隆"><span class="nav-number">17.</span> <span class="nav-text">克隆</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vincent</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Muse
+  </a>
+</div>
+
+<div>
+<a href="http://www.miitbeian.gov.cn/" rel="external nofollow">粤ICP备16107811号</a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

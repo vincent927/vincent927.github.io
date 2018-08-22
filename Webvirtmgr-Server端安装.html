@@ -1,0 +1,736 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="baidu-site-verification" content="LJgfOWhkKl" />
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="kvm,webvirtmgr," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="WebVirtMgr是近两年来发展较快，比较活跃，非常清新的一个KVM管理平台，提供对宿主机和虚机的统一管理，它有别于kvm自带的图形管理工具（virtual machine manager），让kvm管理变得更为可视化，对中小型kvm应用场景带来了更多方便。">
+<meta name="keywords" content="kvm,webvirtmgr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Webvirtmgr-Server端安装">
+<meta property="og:url" content="http://vincentblog.cn/Webvirtmgr-Server端安装.html">
+<meta property="og:site_name" content="Vincent Blog">
+<meta property="og:description" content="WebVirtMgr是近两年来发展较快，比较活跃，非常清新的一个KVM管理平台，提供对宿主机和虚机的统一管理，它有别于kvm自带的图形管理工具（virtual machine manager），让kvm管理变得更为可视化，对中小型kvm应用场景带来了更多方便。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-08-22T01:39:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Webvirtmgr-Server端安装">
+<meta name="twitter:description" content="WebVirtMgr是近两年来发展较快，比较活跃，非常清新的一个KVM管理平台，提供对宿主机和虚机的统一管理，它有别于kvm自带的图形管理工具（virtual machine manager），让kvm管理变得更为可视化，对中小型kvm应用场景带来了更多方便。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 9929411,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://vincentblog.cn/Webvirtmgr-Server端安装.html"/>
+
+
+  <title> Webvirtmgr-Server端安装 | Vincent Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?e78a7a36dc0c97807b01e08b672686f4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="http://s95.cnzz.com/z_stat.php?id=1260196456&web_id=1260196456" language="JavaScript"></script>
+  </div>
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Vincent Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Webvirtmgr-Server端安装
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-12-30T16:25:13+08:00" content="2016-12-30">
+              2016-12-30
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/kvm/" itemprop="url" rel="index">
+                    <span itemprop="name">kvm</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>WebVirtMgr是近两年来发展较快，比较活跃，非常清新的一个KVM管理平台，提供对宿主机和虚机的统一管理，它有别于kvm自带的图形管理工具（virtual machine manager），让kvm管理变得更为可视化，对中小型kvm应用场景带来了更多方便。</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="WebVirtMgr-介绍"><a href="#WebVirtMgr-介绍" class="headerlink" title="WebVirtMgr 介绍"></a>WebVirtMgr 介绍</h1><p>WebVirtMgr采用几乎纯Python开发，其前端是基于Python的Django，后端是基于Libvirt的Python接口，将日常kvm的管理操作变的更加的可视化。  </p>
+<p><strong>WebVirtMgr 特点</strong></p>
+<ul>
+<li>操作简单，易于使用</li>
+<li>通过libvirt的API接口对kvm进行管理</li>
+<li>提供对虚拟机生命周期管理</li>
+</ul>
+<p><strong>WebVirtMgr 功能</strong></p>
+<ul>
+<li>宿主机管理支持以下功能</li>
+<li>CPU利用率</li>
+<li>内存利用率</li>
+<li>网络资源池管理</li>
+<li>存储资源池管理</li>
+<li>虚拟机镜像</li>
+<li>虚拟机克隆</li>
+<li>快照管理</li>
+<li>日志管理</li>
+<li>虚机迁移</li>
+</ul>
+<p><strong>虚拟机管理支持以下功能</strong></p>
+<ul>
+<li>CPU利用率</li>
+<li>内存利用率</li>
+<li>光盘管理</li>
+<li>关/开/暂停虚拟机</li>
+<li>安装虚拟机</li>
+<li>VNC console连接</li>
+<li>创建快照</li>
+</ul>
+<h1 id="Server安装"><a href="#Server安装" class="headerlink" title="Server安装"></a>Server安装</h1><h2 id="1-Centos6"><a href="#1-Centos6" class="headerlink" title="1. Centos6"></a>1. Centos6</h2><figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum -y install http:<span class="comment">//dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm</span></span><br><span class="line">$ sudo yum -y install git <span class="keyword">python</span>-pip libvirt-<span class="keyword">python</span> libxml2-<span class="keyword">python</span> <span class="keyword">python</span>-websockify  nginx</span><br></pre></td></tr></table></figure>
+<p>自带的官方pip源较慢,推荐阿里的pip源<br>mirrors.aliyun.com/help/pypi/<br>这里我们使用pip安装supervisor,因为yum安装的版本太低了<br>具体的安装过程请移步<br><a href="http://www.vincentblog.cn/%2FLinux%E5%90%8E%E5%8F%B0%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86-Supervisor.html" target="_blank" rel="noopener">http://www.vincentblog.cn/%2FLinux%E5%90%8E%E5%8F%B0%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86-Supervisor.html</a></p>
+<h2 id="2-安装python依赖并设置Django环境"><a href="#2-安装python依赖并设置Django环境" class="headerlink" title="2. 安装python依赖并设置Django环境"></a>2. 安装python依赖并设置Django环境</h2><p>运行<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> git://github.com/retspen/webvirtmgr.git</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> webvirtmgr</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo pip install -r requirements.txt <span class="comment"># or python-pip (RedHat, Fedora, CentOS, OpenSuse)</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ./manage.py syncdb</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ./manage.py collectstatic</span></span><br></pre></td></tr></table></figure></p>
+<p>如果git clone 比较慢去github推荐Donwload zip包下来解压</p>
+<p><a href="https://github.com/retspen/webvirtmgr/archive/master.zip" target="_blank" rel="noopener">https://github.com/retspen/webvirtmgr/archive/master.zip</a></p>
+<p>输入用户信息<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">You just installed Django's auth system, which means you don't have any superusers defined.</span><br><span class="line">Would you like to <span class="keyword">create</span> one <span class="keyword">now</span>? (yes/<span class="keyword">no</span>): yes (Put: yes)</span><br><span class="line">Username (Leave blank <span class="keyword">to</span> <span class="keyword">use</span> <span class="string">'admin'</span>): <span class="keyword">admin</span> (Put: your username <span class="keyword">or</span> login)</span><br><span class="line">E-mail address: username@domain.local (Put: your email)</span><br><span class="line"><span class="keyword">Password</span>: xxxxxx (Put: your <span class="keyword">password</span>)</span><br><span class="line"><span class="keyword">Password</span> (again): xxxxxx (Put: <span class="keyword">confirm</span> <span class="keyword">password</span>)</span><br><span class="line">Superuser created successfully.</span><br></pre></td></tr></table></figure></p>
+<p>创建超级用户<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ./manage.py createsuperuser</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="3-nginx配置"><a href="#3-nginx配置" class="headerlink" title="3. nginx配置"></a>3. nginx配置</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> ..</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo mv webvirtmgr /var/www/         ( CentOS, RedHat, Fedora, Ubuntu )  </span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo mv webvirtmgr /srv/www/         ( OpenSuSe )</span></span><br></pre></td></tr></table></figure>
+<p>添加webvirtmgr.conf到/etc/nginx/conf.d目录下</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">80</span> default_server;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">server_name</span> <span class="variable">$hostname</span>;</span><br><span class="line">    <span class="comment">#access_log /var/log/nginx/webvirtmgr_access_log; </span></span><br><span class="line"></span><br><span class="line">    <span class="attribute">location</span> /static/ &#123;</span><br><span class="line">        <span class="attribute">root</span> /var/www/webvirtmgr/webvirtmgr; <span class="comment"># or /srv instead of /var</span></span><br><span class="line">        <span class="attribute">expires</span> max;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">location</span> / &#123;</span><br><span class="line">        <span class="attribute">proxy_pass</span> http://127.0.0.1:8000;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-for <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>:<span class="variable">$server_port</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-Proto <span class="variable">$scheme</span>;</span><br><span class="line">        <span class="attribute">proxy_connect_timeout</span> <span class="number">600</span>;</span><br><span class="line">        <span class="attribute">proxy_read_timeout</span> <span class="number">600</span>;</span><br><span class="line">        <span class="attribute">proxy_send_timeout</span> <span class="number">600</span>;</span><br><span class="line">        <span class="attribute">client_max_body_size</span> <span class="number">1024M</span>; <span class="comment"># Set higher depending on your needs </span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo vim /etc/nginx/nginx.conf</span></span><br></pre></td></tr></table></figure>
+<p>注释掉Server段示例<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">    server &#123;</span></span><br><span class="line"><span class="meta">#</span><span class="bash">        listen       80 default_server;</span></span><br><span class="line"><span class="meta">#</span><span class="bash">        server_name  localhost;</span></span><br><span class="line"><span class="meta">#</span><span class="bash">        root         /usr/share/nginx/html;</span></span><br><span class="line"><span class="meta">#</span><span class="bash"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">        <span class="comment">#charset koi8-r;</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">        <span class="comment">#access_log  /var/log/nginx/host.access.log  main;</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">        <span class="comment"># Load configuration files for the default server block.</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">        include /etc/nginx/default.d/*.conf;</span></span><br><span class="line"><span class="meta">#</span><span class="bash"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">        location / &#123;</span></span><br><span class="line"><span class="meta">#</span><span class="bash">        &#125;</span></span><br><span class="line"><span class="meta">#</span><span class="bash"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">        <span class="comment"># redirect server error pages to the static page /40x.html</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">        <span class="comment">#</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">        error_page  404              /404.html;</span></span><br><span class="line"><span class="meta">#</span><span class="bash">        location = /40x.html &#123;</span></span><br><span class="line"><span class="meta">#</span><span class="bash">        &#125;</span></span><br><span class="line"><span class="meta">#</span><span class="bash"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">        <span class="comment"># redirect server error pages to the static page /50x.html</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">        <span class="comment">#</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">        error_page   500 502 503 504  /50x.html;</span></span><br><span class="line"><span class="meta">#</span><span class="bash">        location = /50x.html &#123;</span></span><br><span class="line"><span class="meta">#</span><span class="bash">        &#125;</span></span><br><span class="line"><span class="meta">#</span><span class="bash">    &#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>删除默认配置虚拟主机<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo rm -rf <span class="regexp">/etc/</span>nginx<span class="regexp">/conf.d/</span><span class="keyword">default</span>.conf</span><br></pre></td></tr></table></figure></p>
+<p>启动nginx<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo<span class="built_in"> service </span>nginx start</span><br><span class="line">chkconfig nginx --level 345 on</span><br></pre></td></tr></table></figure></p>
+<h2 id="4-Supervisor配置"><a href="#4-Supervisor配置" class="headerlink" title="4. Supervisor配置"></a>4. Supervisor配置</h2><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo chown -R <span class="string">nginx:</span>nginx <span class="regexp">/var/</span>www/webvirtmgr</span><br></pre></td></tr></table></figure>
+<p>创建文件<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+<p>[program:webvirtmgr]<br>command=/usr/bin/python /var/www/webvirtmgr/manage.py run_gunicorn -c /var/www/webvirtmgr/conf/gunicorn.conf.py<br>directory=/var/www/webvirtmgr<br>autostart=true<br>autorestart=true<br>logfile=/var/log/supervisor/webvirtmgr.log<br>log_stderr=true<br>user=nginx</p>
+<p>[program:webvirtmgr-console]<br>command=/usr/bin/python /var/www/webvirtmgr/console/webvirtmgr-console<br>directory=/var/www/webvirtmgr<br>autostart=true<br>autorestart=true<br>stdout_logfile=/var/log/supervisor/webvirtmgr-console.log<br>redirect_stderr=true<br>user=nginx<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">重启supervisor</span><br></pre></td></tr></table></figure></p>
+<p>$ sudo service supervisord stop<br>$ sudo service supervisord start<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 访问</span></span></span><br><span class="line">在浏览器输入</span><br></pre></td></tr></table></figure></p>
+<p><a href="http://x.x.x.x" target="_blank" rel="noopener">http://x.x.x.x</a><br><code>`</code></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://github.com/retspen/webvirtmgr/wiki/Install-WebVirtMgr" target="_blank" rel="noopener">https://github.com/retspen/webvirtmgr/wiki/Install-WebVirtMgr</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="uploads/wechatpay.jpg" alt="Vincent WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="uploads/alipay.jpg" alt="Vincent Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/kvm/" rel="tag">#kvm</a>
+          
+            <a href="/tags/webvirtmgr/" rel="tag">#webvirtmgr</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Gitlab删除environments.html" rel="next" title="Gitlab删除environments">
+                <i class="fa fa-chevron-left"></i> Gitlab删除environments
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Webvirtmgr-Host端安装.html" rel="prev" title="Webvirtmgr-Host端安装">
+                Webvirtmgr-Host端安装 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/vincent.png"
+               alt="Vincent" />
+          <p class="site-author-name" itemprop="name">Vincent</p>
+          <p class="site-description motion-element" itemprop="description">为了无法计算的价值</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">79</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">88</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/vincent927" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/liuhuan19910927" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#WebVirtMgr-介绍"><span class="nav-number">1.</span> <span class="nav-text">WebVirtMgr 介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Server安装"><span class="nav-number">2.</span> <span class="nav-text">Server安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Centos6"><span class="nav-number">2.1.</span> <span class="nav-text">1. Centos6</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-安装python依赖并设置Django环境"><span class="nav-number">2.2.</span> <span class="nav-text">2. 安装python依赖并设置Django环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-nginx配置"><span class="nav-number">2.3.</span> <span class="nav-text">3. nginx配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Supervisor配置"><span class="nav-number">2.4.</span> <span class="nav-text">4. Supervisor配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vincent</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Muse
+  </a>
+</div>
+
+<div>
+<a href="http://www.miitbeian.gov.cn/" rel="external nofollow">粤ICP备16107811号</a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
