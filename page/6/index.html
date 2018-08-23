@@ -285,6 +285,121 @@
             
               
                 
+                <a class="post-title-link" href="/KVM安装虚拟机.html" itemprop="url">
+                  KVM安装虚拟机
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-11-03T18:15:08+08:00" content="2016-11-03">
+              2016-11-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/kvm/" itemprop="url" rel="index">
+                    <span itemprop="name">kvm</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="一-qcow2格式磁盘文件"><a href="#一-qcow2格式磁盘文件" class="headerlink" title="一.qcow2格式磁盘文件"></a>一.qcow2格式磁盘文件</h1><p>Qcow2镜像格式是qemu支持的磁盘镜像格式之一。qcow2的表现形式为在一个文件中模拟一个固定大小的块设备。对与qcow2格式，相对于raw格式来说，有几个优点：<br>更小的文件大小，即使是不支持holes的文件系统也可以（这样的话，ls跟du看到的就一样了)；<br>Copy-on-write的支持；<br>快照的支持，可以维护多个快照；<br>基于zlib的压缩；<br>AES加密</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/KVM安装虚拟机.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/Nginx-https配置.html" itemprop="url">
                   Nginx https配置
                 </a>
@@ -1305,127 +1420,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/SVN从windows迁移到linux.html" itemprop="url">
-                  SVN从windows迁移到linux
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-30T12:13:47+08:00" content="2016-09-30">
-              2016-09-30
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>因为之前用的是Win Server 2012 跑的VirtualSVN Server 服务。现在要迁移到Linux服务器上来，所以在这里记录一下迁移过程。</p>
-<h1 id="SVN-Apache-搭建"><a href="#SVN-Apache-搭建" class="headerlink" title="SVN + Apache 搭建"></a>SVN + Apache 搭建</h1><ul>
-<li>Centos7</li>
-<li>Svnserver 1.8</li>
-</ul>
-<p>首先目标机器肯定是要安装SVN,这里要注意一点的是目标机器SVN版本一定要和之前的SVN版本一致。</p>
-<p>因为Centos7默认的Yum源SVN版本是1.7，而Windows上面这里是1.8。所以这里要添加一个1.8的SVN Yum源。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/SVN从windows迁移到linux.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1471,7 +1465,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">79</span>
+              <span class="site-state-item-count">80</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1488,7 +1482,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">90</span>
+                <span class="site-state-item-count">91</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

@@ -285,6 +285,121 @@
             
               
                 
+                <a class="post-title-link" href="/ES集群安装.html" itemprop="url">
+                  ES集群安装
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-08-23T15:01:48+08:00" content="2018-08-23">
+              2018-08-23
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/ELK/" itemprop="url" rel="index">
+                    <span itemprop="name">ELK</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h1><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">#集群名称</span><br><span class="line">cluster<span class="selector-class">.name</span>: fo-es</span><br><span class="line">#节点名称</span><br><span class="line">node<span class="selector-class">.name</span>: fo-node-<span class="number">1</span></span><br><span class="line">node<span class="selector-class">.data</span>: true</span><br><span class="line">#存储路径</span><br><span class="line">path<span class="selector-class">.data</span>: /data/es/</span><br><span class="line">#监听地址</span><br><span class="line">network<span class="selector-class">.host</span>: <span class="number">10.28</span>.<span class="number">99.158</span></span><br><span class="line">http<span class="selector-class">.port</span>: <span class="number">9200</span></span><br><span class="line">#发现地址</span><br><span class="line">discovery<span class="selector-class">.zen</span><span class="selector-class">.ping</span><span class="selector-class">.unicast</span><span class="selector-class">.hosts</span>: [<span class="string">"10.28.99.158"</span>, <span class="string">"10.28.93.13"</span>,<span class="string">"10.81.130.236"</span>]</span><br><span class="line">#如果要使用head,那么需要增加新的参数,使head插件可以访问es</span><br><span class="line">http<span class="selector-class">.cors</span><span class="selector-class">.enabled</span>: true</span><br><span class="line">http<span class="selector-class">.cors</span><span class="selector-class">.allow-origin</span>: <span class="string">"*"</span></span><br><span class="line">#CenteOS需要加入以下配置</span><br><span class="line">bootstrap<span class="selector-class">.memory_lock</span>: false</span><br><span class="line">bootstrap<span class="selector-class">.system_call_filter</span>: false</span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/ES集群安装.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/多次反向代理后Nginx获取用户真实IP.html" itemprop="url">
                   多次反向代理后Nginx获取用户真实IP
                 </a>
@@ -1310,121 +1425,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/ES模板报错-Template-variables-could-not-be-initialized.html" itemprop="url">
-                  Grafana ES模板报错  Template variables could not be initialized
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-08-17T10:55:18+08:00" content="2017-08-17">
-              2017-08-17
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Grafana/" itemprop="url" rel="index">
-                    <span itemprop="name">Grafana</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="报错信息"><a href="#报错信息" class="headerlink" title="报错信息"></a>报错信息</h1><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Template variables could <span class="keyword">not</span> be initialized: <span class="literal">undefined</span></span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/ES模板报错-Template-variables-could-not-be-initialized.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1470,7 +1470,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">79</span>
+              <span class="site-state-item-count">80</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1487,7 +1487,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">90</span>
+                <span class="site-state-item-count">91</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

@@ -285,6 +285,121 @@
             
               
                 
+                <a class="post-title-link" href="/使用telegraf-influxdb-grafana打造颜值爆表的监控系统-五-grafana添加Data-Sources.html" itemprop="url">
+                  使用telegraf,influxdb,grafana打造颜值爆表的监控系统(五)-grafana添加Data Sources
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-02-20T17:09:47+08:00" content="2017-02-20">
+              2017-02-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/monitoring/" itemprop="url" rel="index">
+                    <span itemprop="name">monitoring</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>前面我们已经安装了telegraf,inxlufdb,grafana。写在数据已经存储在Infludb了，那么接下来我们配置Grafana的Data Sources 将数据关联起来。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/使用telegraf-influxdb-grafana打造颜值爆表的监控系统-五-grafana添加Data-Sources.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/使用telegraf-influxdb-grafana打造颜值爆表的监控系统-四-grafana安装.html" itemprop="url">
                   使用telegraf,influxdb,grafana打造颜值爆表的监控系统(四)-grafana安装
                 </a>
@@ -1302,119 +1417,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/利用mysqldump备份文件恢复指定表.html" itemprop="url">
-                  利用mysqldump备份文件恢复指定表
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-12-30T18:03:27+08:00" content="2016-12-30">
-              2016-12-30
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/mysql/" itemprop="url" rel="index">
-                    <span itemprop="name">mysql</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">FILE =  test.sql</span><br><span class="line">DB = <span class="built_in">test</span></span><br><span class="line">TABLE=  a</span><br><span class="line">USER= root</span><br><span class="line">HOST= localhost</span><br><span class="line">PORT= 3306</span><br><span class="line">PASSWORD= 123456</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">cat <span class="variable">$FILE</span>  |sed -e <span class="string">'/./&#123;H;$!d;&#125;'</span> -e <span class="string">'x;/CREATE TABLE `$TABLE`/!d;q'</span> | mysql -u<span class="variable">$USER</span> -p<span class="variable">$PASSWORD</span> -h<span class="variable">$HOST</span> <span class="variable">$DB</span> &amp;&amp; cat <span class="variable">$SQL_FILE</span>  | grep --ignore-case  <span class="string">'insert into `$TABLE`'</span> | mysql -u<span class="variable">$USER</span> -p<span class="variable">$PASSWORD</span> -h<span class="variable">$HOST</span> <span class="variable">$DB</span></span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1460,7 +1462,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">79</span>
+              <span class="site-state-item-count">80</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1477,7 +1479,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">90</span>
+                <span class="site-state-item-count">91</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

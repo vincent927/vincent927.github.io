@@ -69,7 +69,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="linux," />
+  <meta name="keywords" content="ES," />
 
 
 
@@ -85,18 +85,18 @@
 
 
 
-<meta name="description" content="背景 系统管理员经常需要SSH 或者telent 远程登录到Linux 服务器，经常运行一些需要很长时间才能完成的任务，比如系统备份、ftp 传输等等。通常情况下我们都是为每一个这样的任务开一个远程终端窗口，因为它们执行的时间太长了。必须等待它们执行完毕，在此期间不能关掉窗口或者断开连接，否则这个任务就会被杀掉，一切半途而废了。">
-<meta name="keywords" content="linux">
+<meta name="description" content="配置文件123456789101112131415161718#集群名称cluster.name: fo-es#节点名称node.name: fo-node-1node.data: true#存储路径path.data: /data/es/#监听地址network.host: 10.28.99.158http.port: 9200#发现地址discovery.zen.ping.unicast.ho">
+<meta name="keywords" content="ES">
 <meta property="og:type" content="article">
-<meta property="og:title" content="screen命令">
-<meta property="og:url" content="http://vincentblog.cn/screen命令.html">
+<meta property="og:title" content="ES集群安装">
+<meta property="og:url" content="http://vincentblog.cn/ES集群安装.html">
 <meta property="og:site_name" content="Vincent Blog">
-<meta property="og:description" content="背景 系统管理员经常需要SSH 或者telent 远程登录到Linux 服务器，经常运行一些需要很长时间才能完成的任务，比如系统备份、ftp 传输等等。通常情况下我们都是为每一个这样的任务开一个远程终端窗口，因为它们执行的时间太长了。必须等待它们执行完毕，在此期间不能关掉窗口或者断开连接，否则这个任务就会被杀掉，一切半途而废了。">
+<meta property="og:description" content="配置文件123456789101112131415161718#集群名称cluster.name: fo-es#节点名称node.name: fo-node-1node.data: true#存储路径path.data: /data/es/#监听地址network.host: 10.28.99.158http.port: 9200#发现地址discovery.zen.ping.unicast.ho">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-22T01:39:54.000Z">
+<meta property="og:updated_time" content="2018-08-23T07:02:41.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="screen命令">
-<meta name="twitter:description" content="背景 系统管理员经常需要SSH 或者telent 远程登录到Linux 服务器，经常运行一些需要很长时间才能完成的任务，比如系统备份、ftp 传输等等。通常情况下我们都是为每一个这样的任务开一个远程终端窗口，因为它们执行的时间太长了。必须等待它们执行完毕，在此期间不能关掉窗口或者断开连接，否则这个任务就会被杀掉，一切半途而废了。">
+<meta name="twitter:title" content="ES集群安装">
+<meta name="twitter:description" content="配置文件123456789101112131415161718#集群名称cluster.name: fo-es#节点名称node.name: fo-node-1node.data: true#存储路径path.data: /data/es/#监听地址network.host: 10.28.99.158http.port: 9200#发现地址discovery.zen.ping.unicast.ho">
 
 
 
@@ -117,10 +117,10 @@
 
 
 
-  <link rel="canonical" href="http://vincentblog.cn/screen命令.html"/>
+  <link rel="canonical" href="http://vincentblog.cn/ES集群安装.html"/>
 
 
-  <title> screen命令 | Vincent Blog </title>
+  <title> ES集群安装 | Vincent Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -286,7 +286,7 @@
             
             
               
-                screen命令
+                ES集群安装
               
             
           </h1>
@@ -298,8 +298,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-03-15T16:59:43+08:00" content="2017-03-15">
-              2017-03-15
+            <time itemprop="dateCreated" datetime="2018-08-23T15:01:48+08:00" content="2018-08-23">
+              2018-08-23
             </time>
           </span>
 
@@ -312,8 +312,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
+                  <a href="/categories/ELK/" itemprop="url" rel="index">
+                    <span itemprop="name">ELK</span>
                   </a>
                 </span>
 
@@ -345,32 +345,23 @@
       
 
       
-        <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><blockquote>
-<p>系统管理员经常需要SSH 或者telent 远程登录到Linux 服务器，经常运行一些需要很长时间才能完成的任务，比如系统备份、ftp 传输等等。通常情况下我们都是为每一个这样的任务开一个远程终端窗口，因为它们执行的时间太长了。必须等待它们执行完毕，在此期间不能关掉窗口或者断开连接，否则这个任务就会被杀掉，一切半途而废了。</p>
-</blockquote>
+        <h1 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h1><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">#集群名称</span><br><span class="line">cluster<span class="selector-class">.name</span>: fo-es</span><br><span class="line">#节点名称</span><br><span class="line">node<span class="selector-class">.name</span>: fo-node-<span class="number">1</span></span><br><span class="line">node<span class="selector-class">.data</span>: true</span><br><span class="line">#存储路径</span><br><span class="line">path<span class="selector-class">.data</span>: /data/es/</span><br><span class="line">#监听地址</span><br><span class="line">network<span class="selector-class">.host</span>: <span class="number">10.28</span>.<span class="number">99.158</span></span><br><span class="line">http<span class="selector-class">.port</span>: <span class="number">9200</span></span><br><span class="line">#发现地址</span><br><span class="line">discovery<span class="selector-class">.zen</span><span class="selector-class">.ping</span><span class="selector-class">.unicast</span><span class="selector-class">.hosts</span>: [<span class="string">"10.28.99.158"</span>, <span class="string">"10.28.93.13"</span>,<span class="string">"10.81.130.236"</span>]</span><br><span class="line">#如果要使用head,那么需要增加新的参数,使head插件可以访问es</span><br><span class="line">http<span class="selector-class">.cors</span><span class="selector-class">.enabled</span>: true</span><br><span class="line">http<span class="selector-class">.cors</span><span class="selector-class">.allow-origin</span>: <span class="string">"*"</span></span><br><span class="line">#CenteOS需要加入以下配置</span><br><span class="line">bootstrap<span class="selector-class">.memory_lock</span>: false</span><br><span class="line">bootstrap<span class="selector-class">.system_call_filter</span>: false</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
-<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><blockquote>
-<p>GNU Screen是一款由GNU计划开发的用于命令行终端切换的自由软件。用户可以通过该软件同时连接多个本地或远程的命令行会话，并在其间自由切换。</p>
-</blockquote>
-<blockquote>
-<p>GNU Screen可以看作是窗口管理器的命令行界面版本。它提供了统一的管理多个会话的界面和相应的功能。</p>
-</blockquote>
-<ul>
-<li>会话恢复<blockquote>
-<p>只要Screen本身没有终止，在其内部运行的会话都可以恢复。这一点对于远程登录的用户特别有用——即使网络连接中断，用户也不会失去对已经打开的命令行会话的控制。只要再次登录到主机上执行screen -r就可以恢复会话的运行。同样在暂时离开的时候，也可以执行分离命令detach，在保证里面的程序正常运行的情况下让Screen挂起（切换到后台）。这一点和图形界面下的VNC很相似。</p>
-</blockquote>
-</li>
-<li>多窗口<blockquote>
-<p>在Screen环境下，所有的会话都独立的运行，并拥有各自的编号、输入、输出和窗口缓存。用户可以通过快捷键在不同的窗口下切换，并可以自由的重定向各个窗口的输入和输出。Screen实现了基本的文本操作，如复制粘贴等；还提供了类似滚动条的功能，可以查看窗口状况的历史记录。窗口还可以被分区和命名，还可以监视后台窗口的活动。</p>
+<p>其他节点需要修改的地方<br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">node</span>.<span class="title">name</span></span><br><span class="line">network.host</span><br></pre></td></tr></table></figure></p>
+<p>然后依次启动即可</p>
+<h1 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h1><p>node-master主节点<br>集群中用于元数据(metadata)的请求处理，比如确定分片位置，索引的新增、删除请求分配等</p>
+<p>node<br>包括client node和 data node</p>
+<ol>
+<li><code>client node</code> node.master=true,node.data=false 用于转发请求，起到平衡负载的作用</li>
+<li><code>data node</code> node.master=flase,node.data=true<blockquote>
+<p>节点上保存了数据分片。它负责数据相关操作，比如分片的 CRUD，以及搜索和整合操作。这些操作都比较消耗 CPU、内存和 I/O 资源<br>shards 分片<br>在设置索引时默认(5)或自己设置的分片数量，即indices(1)–shards(n)，而每插入一条数据都会在唯一主分片中，即Document(n)–shards(1)</p>
 </blockquote>
 </li>
-<li>会话共享<blockquote>
-<p>Screen可以让一个或多个用户从不同终端多次登录一个会话，并共享会话的所有特性（比如可以看到完全相同的输出）。它同时提供了窗口访问权限的机制，可以对窗口进行密码保护。<br>GNU’s Screen 官方站点：<a href="http://www.gnu.org/software/screen/" target="_blank" rel="noopener">http://www.gnu.org/software/screen/</a></p>
-</blockquote>
-</li>
-</ul>
-<h1 id="基础命令"><a href="#基础命令" class="headerlink" title="基础命令"></a>基础命令</h1><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装</span></span><br><span class="line">yum install<span class="built_in"> screen </span>-y</span><br><span class="line"><span class="comment"># 创建一个窗口</span></span><br><span class="line">screen -S test</span><br><span class="line"><span class="comment">#暂时中断当前窗口</span></span><br><span class="line">CTRL+a+d</span><br><span class="line"><span class="comment">#列出当前窗口</span></span><br><span class="line">screen -ls</span><br><span class="line"><span class="comment">#回到指定窗口</span></span><br><span class="line">screen -r test</span><br><span class="line"><span class="comment">#永久退出当前窗口</span></span><br><span class="line">exit</span><br></pre></td></tr></table></figure>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="http://www.cnblogs.com/mchina/archive/2013/01/30/2880680.html" target="_blank" rel="noopener">http://www.cnblogs.com/mchina/archive/2013/01/30/2880680.html</a></p>
+</ol>
+<p>replicas 复制分片<br>同样在设置索引时会默认(1)或自定义复制分片数量，该数量对应关系为每个主分片对应的复制分片，即shards(1)–replicas(n)</p>
+<h1 id="查看集群状态"><a href="#查看集群状态" class="headerlink" title="查看集群状态"></a>查看集群状态</h1><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -X GET <span class="string">"10.28.99.158:9200/_cat/health?v"</span></span><br><span class="line">epoch      timestamp cluster status <span class="keyword">node</span>.<span class="title">total</span> <span class="keyword">node</span>.<span class="title">data</span> shards pri relo init unassign pending_tasks max_task_wait_time active_shards_percent</span><br><span class="line"><span class="number">1535006625</span> <span class="number">14</span>:<span class="number">43</span>:<span class="number">45</span>  fo-es   green           <span class="number">3</span>         <span class="number">3</span>    <span class="number">794</span> <span class="number">397</span>    <span class="number">0</span>    <span class="number">0</span>        <span class="number">0</span>             <span class="number">0</span>                  -                <span class="number">100.0</span>%</span><br></pre></td></tr></table></figure>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">curl -X GET <span class="string">"10.28.99.158:9200/_cat/nodes?v"</span></span><br><span class="line">ip            heap.percent ram.percent cpu load_1m load_5m load_15m node.role master name</span><br><span class="line"><span class="number">10.28</span><span class="number">.93</span><span class="number">.13</span>             <span class="number">50</span>          <span class="number">93</span>   <span class="number">7</span>    <span class="number">0.09</span>    <span class="number">0.11</span>     <span class="number">0.09</span> mdi       -      fo-node<span class="number">-2</span></span><br><span class="line"><span class="number">10.81</span><span class="number">.130</span><span class="number">.236</span>           <span class="number">35</span>          <span class="number">95</span>   <span class="number">6</span>    <span class="number">0.06</span>    <span class="number">0.06</span>     <span class="number">0.23</span> mdi       -      fo-node<span class="number">-3</span></span><br><span class="line"><span class="number">10.28</span><span class="number">.99</span><span class="number">.158</span>            <span class="number">63</span>          <span class="number">98</span>   <span class="number">3</span>    <span class="number">0.20</span>    <span class="number">0.27</span>     <span class="number">0.36</span> mdi       *      fo-node<span class="number">-1</span></span><br></pre></td></tr></table></figure>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://www.jianshu.com/p/149a8da90bbc" target="_blank" rel="noopener">https://www.jianshu.com/p/149a8da90bbc</a><br><a href="https://blog.csdn.net/cb2474600377/article/details/78274562" target="_blank" rel="noopener">https://blog.csdn.net/cb2474600377/article/details/78274562</a></p>
 
       
     </div>
@@ -414,7 +405,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/linux/" rel="tag">#linux</a>
+            <a href="/tags/ES/" rel="tag">#ES</a>
           
         </div>
       
@@ -423,17 +414,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/使用telegraf-influxdb-grafana打造颜值爆表的监控系统-六-Grafana添加Dashboard.html" rel="next" title="使用telegraf,influxdb,grafana打造颜值爆表的监控系统(六)-Grafana添加Dashboard">
-                <i class="fa fa-chevron-left"></i> 使用telegraf,influxdb,grafana打造颜值爆表的监控系统(六)-Grafana添加Dashboard
+              <a href="/多次反向代理后Nginx获取用户真实IP.html" rel="next" title="多次反向代理后Nginx获取用户真实IP">
+                <i class="fa fa-chevron-left"></i> 多次反向代理后Nginx获取用户真实IP
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/Squild-反向代理搭建.html" rel="prev" title="Squild 反向代理搭建">
-                Squild 反向代理搭建 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -567,7 +554,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">2.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基础命令"><span class="nav-number">3.</span> <span class="nav-text">基础命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#配置文件"><span class="nav-number">1.</span> <span class="nav-text">配置文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解析"><span class="nav-number">2.</span> <span class="nav-text">解析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#查看集群状态"><span class="nav-number">3.</span> <span class="nav-text">查看集群状态</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
           </div>
         </section>
