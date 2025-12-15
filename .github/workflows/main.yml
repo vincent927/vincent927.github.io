@@ -14,7 +14,7 @@ jobs:
       - name: Sync to CNB Repository
         run: |
           dig cnb.cool
-          GIT_CURL_VERBOSE=1 git clone https://cnb.cool/vincent/vincent927.github.io test
+          GIT_CURL_VERBOSE=1 git clone https://cnb.cool/vincent/vincent927.github.io liuhuan-test
       - name: Sync to CNB Repository
         run: |
           docker run --rm \
