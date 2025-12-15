@@ -24,7 +24,7 @@ jobs:
             -e PLUGIN_TARGET_URL="https://cnb.cool/vincent/vincent927.github.io" \
             -e PLUGIN_AUTH_TYPE="https" \
             -e PLUGIN_USERNAME="cnb" \
-            -e PLUGIN_PASSWORD="${{ secrets.CNB_TOKEN }}" \
+            -e PLUGIN_PASSWORD="cauaVrIr7myw41b47dURDwz6o4C" \
             -e PLUGIN_PUSH_TAGS="true" \
             -e PLUGIN_FORCE="true" \
             tencentcom/git-sync
