@@ -11,13 +11,13 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Sync to CNB Repository
+      - name: clone test
         run: |
           dig cnb.cool
           GIT_CURL_VERBOSE=1 git clone https://cnb.cool/vincent/vincent927.github.io liuhuan-test
-          echo ${{secrets.CNB_TOKEN }}
       - name: Sync to CNB Repository
         run: |
+          echo ${{ secrets.CNB_TOKEN }}
           docker run --rm \
             -v ${{ github.workspace }}:${{ github.workspace }} \
             -w ${{ github.workspace }} \
