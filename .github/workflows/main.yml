@@ -15,6 +15,7 @@ jobs:
         run: |
           dig cnb.cool
           GIT_CURL_VERBOSE=1 git clone https://cnb.cool/vincent/vincent927.github.io liuhuan-test
+          echo ${{secrets.CNB_TOKEN }}
       - name: Sync to CNB Repository
         run: |
           docker run --rm \
